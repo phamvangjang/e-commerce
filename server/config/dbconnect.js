@@ -1,4 +1,4 @@
-const { defalt: mongoose } = require('mongoose')
+const mongoose = require('mongoose');
 
 const dbConnect = async () => {
     try {
