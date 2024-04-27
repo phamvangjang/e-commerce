@@ -7,6 +7,4 @@ router.get('/', ctrls.getCategories)
 router.put('/:bcid', [verifyAccessToken, isAdmin], ctrls.updateCategory)
 router.delete('/:bcid', [verifyAccessToken, isAdmin], ctrls.deleteCategory)
 
-
-
 module.exports = router
