@@ -11,6 +11,13 @@ const createBlog = asyncHandler(async (req, res) => {
     })
 })
 
+const getBlogs = asyncHandler(async (req, res) => {
+    const response = await Blog.find()
+    return res.status(200).json({
+        success: response ? true : false,
+        blogs: response
+    })
+})
 
 const getBlog = asyncHandler(async (req, res) => {
     const { bid } = req.params
@@ -22,14 +29,7 @@ const getBlog = asyncHandler(async (req, res) => {
         rs: blog
     })
 })
-
-const getBlogs = asyncHandler(async (req, res) => {
-    const blogs = await Blog.find()
-    return res.status(200).json({
-        success: blogs ? true : false,
-        rs: blogs
-    })
-})
+//chua test api duoc #14 - 30p
 
 const updateBlog = asyncHandler(async (req, res) => {
     const { blid } = req.params

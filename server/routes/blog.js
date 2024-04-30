@@ -3,12 +3,12 @@ const { verifyAccessToken, isAdmin } = require('../middleware/verifyToken')
 const ctrls = require('../controllers/blog')
 
 
+router.get('/', ctrls.getBlogs)
 router.post('/', [verifyAccessToken, isAdmin], ctrls.createBlog)
+router.get('/one/:bid', ctrls.getBlog)
 router.put('/like/:bid', [verifyAccessToken], ctrls.likeBlog)
 router.put('/dislike/:bid', [verifyAccessToken], ctrls.dislikeBlog)
-router.get('/:bid', ctrls.getBlog)
 router.put('/:blid', [verifyAccessToken, isAdmin], ctrls.updateBlog)
 router.delete('/:blid', [verifyAccessToken, isAdmin], ctrls.deleteBlog)
-router.get('/', [verifyAccessToken], ctrls.getBlogs)
 
 module.exports = router;
