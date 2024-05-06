@@ -47,7 +47,7 @@ const BestSeller = () => {
                     <span
                         key={el.id}
                         pid={el.id}
-                        className={`font-semibold capitalize cursor-pointer border-r text-gray-300 ${activedTab === el.id ? 'text-gray-900' : ''}`}
+                        className={`font-semibold uppercase cursor-pointer border-r text-gray-300 ${activedTab === el.id ? 'text-gray-900' : ''}`}
                         onClick={() => setActivedTab(el.id)}
                     >{el.name}</span>
                 ))}

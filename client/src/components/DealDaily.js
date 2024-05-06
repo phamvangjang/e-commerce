@@ -1,8 +1,10 @@
 import React, { useState, useEffect, memo } from "react";
 import icons from "../ultils/icons";
 import { apiGetProducts } from "../apis/product";
-import { renderStarFromNumber, formatMoney } from '../ultils/helpers';
+import { renderStarFromNumber, formatMoney,secondsToHms  } from '../ultils/helpers';
 import { Countdown } from './'
+import moment from 'moment';
+
 
 const { FaStar, IoMdMenu } = icons
 
@@ -18,7 +20,18 @@ const DeadDaily = () => {
         const response = await apiGetProducts({ limit: 1, page: Math.round(Math.random() * 10), totalRatings: 5 })
         if (response.success) {
             setDealdaily(response.products[0])
-            setHour(24)
+
+            const today = `${moment().format('MM/DD/YYYY')} 5:00:00`
+            const seconds = new Date(today).getTime() - new Date().getTime() + 24 * 3600 * 1000
+            const number = secondsToHms(seconds)
+            // const h = 24 - new Date().getHours()
+            // const m = 60 - new Date().getMinutes()
+            // const s = 60 - new Date().getSeconds()
+            setHour(number.h)
+            setMinute(number.m)
+            setSecond(number.s)
+        } else {
+            setHour(0)
             setMinute(59)
             setSecond(59)
         }
