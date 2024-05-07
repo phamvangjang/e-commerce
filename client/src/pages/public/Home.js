@@ -7,13 +7,12 @@ const { MdArrowForwardIos } = icons
 const Home = () => {
     const { newProducts } = useSelector(state => state.products)
     const { categories } = useSelector(state => state.app)
-    console.log(categories)
     return (
         <>
             <div className='w-main flex'>
                 <div className='flex flex-col gap-5 w-[25%] flex-auto'>
                     <Sidebar />
-                    {/* <DeadDaily /> */}
+                    <DeadDaily />
                 </div>
 
                 <div className='flex flex-col gap-5 pl-5 w-[75%] flex-auto'>
@@ -65,7 +64,6 @@ const Home = () => {
             <div className="my-8 w-full">
                 <h3 className="text-[20px] font-semibold py-[15px] border-b-2 border-main uppercase">blog posts</h3>
             </div>
-            <div className='w-full h-[500px] bg-gray-600 uppercase'>footer</div>
         </>
 
     )
