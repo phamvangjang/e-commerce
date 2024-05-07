@@ -12,7 +12,10 @@ const ProductCart = ({ image, title, totalRatings, price }) => {
                 />
                 <div className='flex flex-col gap-1 mt-[15px] items-start w-full text-xs'>
                     <span className='line-clamp-1 capitalize text-sm '>{title?.toLowerCase()}</span>
-                    <span className='flex h-4'>{renderStarFromNumber(totalRatings, 14)}</span>
+                    <span className='flex h-4'>{renderStarFromNumber(totalRatings, 14)?.map((el, index) => (
+                        <span key={index}>{el}</span>
+                    ))}</span>
+
                     <span>{`${formatMoney(price)} VND`}</span>
                 </div>
             </div>

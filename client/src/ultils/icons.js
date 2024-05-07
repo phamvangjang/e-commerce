@@ -8,6 +8,7 @@ import { FaRegStar } from "react-icons/fa";
 import { FaEye } from "react-icons/fa";
 import { IoMdMenu } from "react-icons/io";
 import { FaHeart } from "react-icons/fa";
+import { MdArrowForwardIos } from "react-icons/md";
 
 const icons = {
     RiPhoneFill,
@@ -19,7 +20,8 @@ const icons = {
     FaRegStar,
     FaEye,
     IoMdMenu,
-    FaHeart
+    FaHeart,
+    MdArrowForwardIos
 }
 
 export default icons

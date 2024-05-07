@@ -24,8 +24,9 @@ const fn = async (product) => {
 
 const func = async (category) => {
     await ProductCategory.create({
-        title: category.cate,
-        brand: category.brand,
+        title: category?.cate,
+        brand: category?.brand,
+        image: category?.image
     })
 }
 
