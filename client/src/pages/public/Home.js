@@ -46,15 +46,15 @@ const Home = () => {
                                 <img
                                     src={el?.image}
                                     alt=""
-                                    className="flex-1 w-[144px] h-[130px] w-full object-contain"
+                                    className="flex-1 h-[130px] w-full object-contain"
                                 />
                                 <div className="flex-1 text-gray-700">
                                     <h4 className="font-semibold uppercase">{el.title}</h4>
                                     <ul className="text-sm">
                                         {el?.brand?.map(item => (
-                                            <span className="flex gap-1 items-center text-gray-500">
+                                            <span key={item} className="flex gap-1 items-center text-gray-500">
                                                 <MdArrowForwardIos size={14} />
-                                                <li key={item}>{item}</li>
+                                                <li >{item}</li>
                                             </span>
                                         ))}
                                     </ul>

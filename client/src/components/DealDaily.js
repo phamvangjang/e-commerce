@@ -1,7 +1,7 @@
 import React, { useState, useEffect, memo } from "react";
 import icons from "../ultils/icons";
 import { apiGetProducts } from "../apis/product";
-import { renderStarFromNumber, formatMoney,secondsToHms  } from '../ultils/helpers';
+import { renderStarFromNumber, formatMoney, secondsToHms } from '../ultils/helpers';
 import { Countdown } from './'
 import moment from 'moment';
 
@@ -81,7 +81,9 @@ const DeadDaily = () => {
                     className='w-full object-contain' />
 
                 <span className='line-clamp-1 text-center'>{dealdaily?.title}</span>
-                <span className='flex h-4'>{renderStarFromNumber(dealdaily?.totalRatings, 20)}</span>
+                <span className='flex h-4'>{renderStarFromNumber(dealdaily?.totalRatings, 20)?.map((el, index) => (
+                    <span key={index}>{el}</span>
+                ))}</span>
                 <span>{`${formatMoney(dealdaily?.price)} VND`}</span>
             </div>
             <div className="px-4 mt-8">
