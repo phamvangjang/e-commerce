@@ -6,12 +6,13 @@ import { useNavigate, useLocation } from "react-router-dom";
 import path from "../../ultils/path";
 import { register } from '../../store/user/userSlice';
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 
 const Login = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const location = useLocation()
-    console.log(location)
+    // console.log(location)
     const [payload, setPayload] = useState({
         email: '',
         password: '',
@@ -34,6 +35,11 @@ const Login = () => {
     const handleForgotPassword = async () => {
         const response = await apiForgotPassword({ email })
         console.log(response)
+        if (response.success) {
+            toast.success(response.mes, { theme: 'colored' })
+        } else {
+            toast.info(response.mes, { theme: 'colored' })
+        }
     }
     const handleSubmit = useCallback(async () => {
         const { firstname, lastname, mobile, ...data } = payload
@@ -60,7 +66,7 @@ const Login = () => {
     }, [payload, isRegister])
     return (
         <div className="w-screen h-screen relative">
-            <div className="absolute top-0 left-0 bottom-0 right-0 bg-overlay flex flex-col py-20 z-50 items-center">
+            {isForgotPassword && <div className="animate-slide-tr absolute top-0 left-0 bottom-0 right-0 bg-overlay flex flex-col py-20 z-50 items-center">
                 <div className="bg-gray-300 p-6 rounded-md">
                     <div className="flex flex-col gap-4">
                         <label className="text-gray-800" htmlFor="email">Enter your email: </label>
@@ -74,15 +80,22 @@ const Login = () => {
                             onChange={e => setEmail(e.target.value)}
 
                         />
-                        <div className="flex items-center justify-end w-full">
+                        <div className="flex items-center justify-end w-full gap-4">
                             <Button
                                 name='Submit'
                                 handleOnClick={handleForgotPassword}
+                                style='px-4 py-2 rounded-md text-white bg-blue-500 text-semibold my-2'
+                            />
+
+                            <Button
+                                name='Cancle'
+                                handleOnClick={() => setIsForgotPassword(false)}
+
                             />
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>}
             <img
                 src="https://i.pinimg.com/originals/f5/43/d7/f543d74332fae1e0fe2cd64f9c0ea2fb.jpg"
                 alt=""
@@ -130,7 +143,7 @@ const Login = () => {
                         fw
                     />
                     <div className="flex items-center justify-between my-2 w-full text-sm">
-                        {!isRegister && <span className="cursor-pointer text-blue-400 hover:underline">Forgot your account?</span>}
+                        {!isRegister && <span onClick={() => setIsForgotPassword(true)} className="cursor-pointer text-blue-400 hover:underline">Forgot your account?</span>}
                         {!isRegister && <span
                             onClick={() => setIsRegister(true)}
                             className="cursor-pointer text-blue-400 hover:underline">Create new account</span>}

@@ -55,10 +55,10 @@ const register = asyncHandler(async (req, res) => {
 const finalRegister = asyncHandler(async (req, res) => {
     const cookie = req.cookies
     const { token } = req.params
-    if (!cookie || cookie?.dataregister?.token !== token){
+    if (!cookie || cookie?.dataregister?.token !== token) {
         res.clearCookie('dataregister')
         return res.redirect(`${process.env.CLIENT_URL}/finalregister/failed`)
-    } 
+    }
     const newUser = await User.create({
         email: cookie?.dataregister?.email,
         password: cookie?.dataregister?.password,
@@ -154,8 +154,8 @@ const forgotPassword = asyncHandler(async (req, res) => {
     }
     const rs = await sendMail(data)
     return res.status(200).json({
-        success: true,
-        rs
+        success: rs.response?.includes('OK') ? true : false,
+        mes: rs.response?.includes('OK') ? 'Please check your email' : 'Something went wrong. Plase try later'
     })
 })
 
