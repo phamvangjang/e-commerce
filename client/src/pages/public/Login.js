@@ -1,8 +1,8 @@
 import React, { useState, useCallback } from "react";
 import { InputField, Button } from '../../components'
-import { apiRegister, apiLogin } from "../../apis/user";
+import { apiRegister, apiLogin, apiForgotPassword } from "../../apis/user";
 import Swal from 'sweetalert2'
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import path from "../../ultils/path";
 import { register } from '../../store/user/userSlice';
 import { useDispatch } from "react-redux";
@@ -10,6 +10,8 @@ import { useDispatch } from "react-redux";
 const Login = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
+    const location = useLocation()
+    console.log(location)
     const [payload, setPayload] = useState({
         email: '',
         password: '',
@@ -17,6 +19,7 @@ const Login = () => {
         lastname: '',
         mobile: ''
     })
+    const [isForgotPassword, setIsForgotPassword] = useState(false)
     const [isRegister, setIsRegister] = useState(false)
     const resetPayload = () => {
         setPayload({
@@ -26,6 +29,11 @@ const Login = () => {
             lastname: '',
             mobile: ''
         })
+    }
+    const [email, setEmail] = useState('')
+    const handleForgotPassword = async () => {
+        const response = await apiForgotPassword({ email })
+        console.log(response)
     }
     const handleSubmit = useCallback(async () => {
         const { firstname, lastname, mobile, ...data } = payload
@@ -52,6 +60,29 @@ const Login = () => {
     }, [payload, isRegister])
     return (
         <div className="w-screen h-screen relative">
+            <div className="absolute top-0 left-0 bottom-0 right-0 bg-overlay flex flex-col py-20 z-50 items-center">
+                <div className="bg-gray-300 p-6 rounded-md">
+                    <div className="flex flex-col gap-4">
+                        <label className="text-gray-800" htmlFor="email">Enter your email: </label>
+                        <input
+                            type="text"
+                            name=""
+                            id="email"
+                            className="w-[600px] pb-2 pt-2 border-b outline-none pl-2 placeholder:text-sm"
+                            placeholder="Exp: email@gmail.com"
+                            value={email}
+                            onChange={e => setEmail(e.target.value)}
+
+                        />
+                        <div className="flex items-center justify-end w-full">
+                            <Button
+                                name='Submit'
+                                handleOnClick={handleForgotPassword}
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
             <img
                 src="https://i.pinimg.com/originals/f5/43/d7/f543d74332fae1e0fe2cd64f9c0ea2fb.jpg"
                 alt=""

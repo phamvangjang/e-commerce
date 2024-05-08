@@ -17,7 +17,8 @@ module.exports = {
         main: '#ee3131'
       },
       colors: {
-        main: '#ee3131'
+        main: '#ee3131',
+        overlay: 'rgba(0,0,0,0.8)'
       },
       flex: {
         '2': '2 2 0%',
