@@ -12,7 +12,7 @@ const Home = () => {
     // console.log({ isLoggedIn, current })
     return (
         <>
-            <div className='w-main flex'>
+            <div className='w-main flex mt-6'>
                 <div className='flex flex-col gap-5 w-[25%] flex-auto'>
                     <Sidebar />
                     <DeadDaily />

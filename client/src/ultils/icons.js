@@ -11,6 +11,7 @@ import { FaHeart } from "react-icons/fa";
 import { MdArrowForwardIos } from "react-icons/md";
 import { FaPhoneAlt } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
+import { LuLogOut } from "react-icons/lu";
 
 const icons = {
     RiPhoneFill,
@@ -25,7 +26,8 @@ const icons = {
     FaHeart,
     MdArrowForwardIos,
     FaPhoneAlt,
-    FaLocationDot
+    FaLocationDot,
+    LuLogOut
 }
 
 export default icons

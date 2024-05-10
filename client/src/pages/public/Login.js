@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect } from "react";
 import { InputField, Button } from '../../components'
 import { apiRegister, apiLogin, apiForgotPassword, apiFinalregister } from "../../apis/user";
 import Swal from 'sweetalert2'
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import path from "../../ultils/path";
 import { login } from '../../store/user/userSlice';
 import { useDispatch } from "react-redux";
@@ -202,6 +202,10 @@ const Login = () => {
                             onClick={() => setIsRegister(false)}
                             className="cursor-pointer w-full text-center text-blue-400 hover:underline">Go to Login</span>}
                     </div>
+
+                    <Link to={`/${path.HOME}`}
+                        className="cursor-pointer text-sm text-blue-400 hover:underline"
+                    >Go home?</Link>
                 </div>
             </div>
         </div>

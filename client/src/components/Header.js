@@ -31,11 +31,14 @@ const Header = () => {
                         Online Support 24/7
                     </span>
                 </div>
-                <div className='flex items-center justify-center px-6 border-r gap-2'>
+                <div className='flex items-center justify-center px-6 border-r gap-2 cursor-pointer'>
                     <FaShoppingCart color='red' />
                     <span>0 item(s)</span>
                 </div>
-                <div className='flex items-center justify-center px-6'><FaCircleUser size={24} /></div>
+                <div className='flex items-center justify-center px-6 gap-2 cursor-pointer'>
+                    <FaCircleUser size={24} color="red" />
+                    <span>Profile</span>
+                </div>
             </div>
         </div>
     )
