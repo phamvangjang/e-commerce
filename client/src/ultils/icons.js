@@ -16,6 +16,7 @@ import { FaReply } from "react-icons/fa";
 import { FaGift } from "react-icons/fa";
 import { FaTruck } from "react-icons/fa";
 import { FaShieldAlt } from "react-icons/fa";
+import { FaAngleDown } from "react-icons/fa";
 
 const icons = {
     RiPhoneFill,
@@ -35,7 +36,8 @@ const icons = {
     FaReply,
     FaGift,
     FaTruck,
-    FaShieldAlt
+    FaShieldAlt,
+    FaAngleDown
 }
 
 export default icons
