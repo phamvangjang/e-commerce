@@ -9,6 +9,12 @@ module.exports = {
       // main: ['"Poppins", sans-serif;']
       main: ['Poppins', 'sans-serif;']
     },
+
+    listStyleType: {
+      square: 'square',
+      roman: 'upper-roman',
+    },
+
     extend: {
       width: {
         main: '1220px'

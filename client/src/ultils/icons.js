@@ -27,7 +27,7 @@ const icons = {
     MdArrowForwardIos,
     FaPhoneAlt,
     FaLocationDot,
-    LuLogOut
+    LuLogOut,
 }
 
 export default icons
