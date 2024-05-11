@@ -12,6 +12,10 @@ import { MdArrowForwardIos } from "react-icons/md";
 import { FaPhoneAlt } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import { LuLogOut } from "react-icons/lu";
+import { FaReply } from "react-icons/fa";
+import { FaGift } from "react-icons/fa";
+import { FaTruck } from "react-icons/fa";
+import { FaShieldAlt } from "react-icons/fa";
 
 const icons = {
     RiPhoneFill,
@@ -28,6 +32,10 @@ const icons = {
     FaPhoneAlt,
     FaLocationDot,
     LuLogOut,
+    FaReply,
+    FaGift,
+    FaTruck,
+    FaShieldAlt
 }
 
 export default icons

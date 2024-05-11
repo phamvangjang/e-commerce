@@ -1,12 +1,13 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { apiGetProduct } from "../../apis";
-import { Breadcrumb, Button, SelectOption, SelectQuantity } from "../../components";
+import { apiGetProduct, apiGetProducts } from "../../apis";
+import { Breadcrumb, Button, SelectOption, SelectQuantity, ProductInformation, CustomSlider } from "../../components";
 import Slider from "react-slick";
 import ReactImageMagnify from 'react-image-magnify';
 import { formatMoney, formatPrice, renderStarFromNumber } from "../../ultils/helpers";
+import icons from "../../ultils/icons";
 
-
+const { FaShieldAlt, FaTruck, FaReply, FaPhoneAlt, FaGift } = icons
 const settings = {
     dots: false,
     infinite: false,
@@ -19,14 +20,24 @@ const DetailProduct = () => {
     const { pid, title, category } = useParams()
     const [product, setProduct] = useState(null)
     const [quantity, setQuantity] = useState(1)
+    const [relatedProduct, setRelatedProduct] = useState(null)
     const fetchProductData = async () => {
         const response = await apiGetProduct(pid)
-        console.log(response)
+        // console.log(response)
         if (response.success) setProduct(response.productDada)
     }
 
+    const fetchProducts = async () => {
+        const response = await apiGetProducts({ category })
+        console.log(response)
+        if (response.success) setRelatedProduct(response.products)
+    }
+
     useEffect(() => {
-        if (pid) fetchProductData()
+        if (pid) {
+            fetchProductData()
+            fetchProducts()
+        }
     }, [pid])
 
     const handleQuantity = useCallback((number) => {
@@ -99,18 +110,75 @@ const DetailProduct = () => {
                         ))}
                     </ul>
                     <div className="flex flex-col gap-6">
-                        <SelectQuantity
-                            quantity={quantity}
-                            handleQuantity={handleQuantity}
-                            handleChangeQuantity={handleChangeQuantity}
-                        />
+                        <div className="flex gap-2 items-center">
+                            <span className="uppercase font-bold">Quantity</span>
+                            <SelectQuantity
+                                quantity={quantity}
+                                handleQuantity={handleQuantity}
+                                handleChangeQuantity={handleChangeQuantity}
+                            />
+                        </div>
                         <Button fw>
                             ADD TO CART
                         </Button>
                     </div>
                 </div>
 
-                <div className="flex-2 border border-gray-300">Information</div>
+                <div className="flex-2 ">
+                    <ul>
+                        <li className="mb-3 flex items-center gap-1 p-3 border border-color-[#ebebeb]">
+                            <div className="rounded-full p-2 bg-gray-900"><FaShieldAlt size={14}
+                                color="#fff" /></div>
+                            <div className="flex flex-col items-start">
+                                <span className="text-[14px] text-gray-700">Guarantee</span>
+                                <span className="text-[12px] text-gray-400">Quality Checked</span>
+                            </div>
+                        </li>
+
+                        <li className="mb-3 flex items-center gap-1 p-3 border border-color-[#ebebeb]">
+                            <div className="rounded-full p-2 bg-gray-900"><FaTruck size={14}
+                                color="#fff" /></div>
+                            <div className="flex flex-col items-start">
+                                <span className="text-[14px] text-gray-700">Free Shipping</span>
+                                <span className="text-[12px] text-gray-400">Free On All Products</span>
+                            </div>
+                        </li>
+
+                        <li className="mb-3 flex items-center gap-1 p-3 border border-color-[#ebebeb]">
+                            <div className="rounded-full p-2 bg-gray-900"><FaGift size={14}
+                                color="#fff" /></div>
+                            <div className="flex flex-col items-start">
+                                <span className="text-[14px] text-gray-700">Special Gift Cards</span>
+                                <span className="text-[12px] text-gray-400">Special Gift Cards</span>
+                            </div>
+                        </li>
+
+                        <li className="mb-3 flex items-center gap-1 p-3 border border-color-[#ebebeb]">
+                            <div className="rounded-full p-2 bg-gray-900"><FaReply size={14}
+                                color="#fff" /></div>
+                            <div className="flex flex-col items-start">
+                                <span className="text-[14px] text-gray-700">Free Return</span>
+                                <span className="text-[12px] text-gray-400">Within 7 Days</span>
+                            </div>
+                        </li>
+
+                        <li className="mb-3 flex items-center gap-1 p-3 border border-color-[#ebebeb]">
+                            <div className="rounded-full p-2 bg-gray-900"><FaPhoneAlt size={14}
+                                color="#fff" /></div>
+                            <div className="flex flex-col items-start">
+                                <span className="text-[14px] text-gray-700">Consultancy</span>
+                                <span className="text-[12px] text-gray-400">Lifetime 24/7/356</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div className="w-main m-auto mt-8">
+                <ProductInformation />
+            </div>
+            <div className="w-main m-auto">
+                <h3 className="text-[20px] font-semibold py-[15px] border-b-2 border-main uppercase">OTHER CUSTOMERS ALSO BUY:</h3>
+                <CustomSlider normal={true} products={relatedProduct}/>
             </div>
             <div className="h-[500px]"></div>
         </div>
