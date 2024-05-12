@@ -2,28 +2,65 @@ import React, { memo, useState, useEffect } from 'react'
 import icons from '../ultils/icons'
 import { color } from '../ultils/contants'
 import { createSearchParams, useNavigate, useParams } from 'react-router-dom'
+import { apiGetProducts } from '../apis'
+import useDebounce from '../hooks/useDebounce'
 
 const { FaAngleDown } = icons
 const SearchItem = ({ name, activeClick, changeActiveFilter, type = 'checkbox' }) => {
     const navigate = useNavigate()
     const { category } = useParams()
     const [selected, setSelected] = useState([])
+    const [bestPrice, setBestPrice] = useState(null)
+    const [price, setPrice] = useState({
+        from: '',
+        to: ''
+    })
 
     const handleSelect = (e) => {
-        const alreadyEl = selected.find(el => el === e.target.value)
+        const alreadyEl = selected?.find(el => el === e.target.value)
         if (alreadyEl) setSelected(prev => prev.filter(el => el !== e.target.value))
         else setSelected(prev => [...prev, e.target.value])
         changeActiveFilter(null)
     }
+    const fetchBestPriceProduct = async () => {
+        const response = await apiGetProducts({ sort: '-price', limit: 1 })
+        if (response.success) setBestPrice(response.products[0]?.price)
+    }
 
     useEffect(() => {
+        if (selected?.length > 0) {
+            navigate({
+                pathname: `/${category}`,
+                search: createSearchParams({
+                    color: selected?.join(',')
+                }).toString()
+            })
+        } else {
+            navigate(`/${category}`)
+        }
+    }, [selected])
+    // console.log(selected)
+
+    useEffect(() => {
+        if (type === 'input') fetchBestPriceProduct()
+    }, [type])
+    // console.log(bestPrice)
+
+    useEffect(()=>{
+        if(price.from > price.to) alert('From price cannot greater than to To price!!!')
+    },[price])
+
+    const debouncePriceFrom = useDebounce(price.from, 500)
+    const debouncePriceTo = useDebounce(price.to, 500)
+    useEffect(() => {
+        const data = {}
+        if (Number(price.from) > 0) data.from = price.from
+        if (Number(price.to) > 0) data.to = price.to
         navigate({
             pathname: `/${category}`,
-            search: createSearchParams({
-                color: selected
-            }).toString()
+            search: createSearchParams(data).toString()
         })
-    }, [selected])
+    }, [debouncePriceFrom, debouncePriceTo])
     return (
         <div
             onClick={() => changeActiveFilter(name)}
@@ -33,7 +70,7 @@ const SearchItem = ({ name, activeClick, changeActiveFilter, type = 'checkbox' }
             {activeClick === name && <div className='z-50 absolute top-[calc(100%+3px)] left-0 w-fit p-4 bg-gray-100'>
                 {type === 'checkbox' &&
                     <div className=''>
-                        <div className='p-4 items-center flex justify-between gap-8'>
+                        <div className='p-4 items-center flex justify-between gap-8 border-b-2'>
                             <span className='whitespace-nowrap'>{`${selected.length} selected`}</span>
                             <span
                                 onClick={e => {
@@ -42,12 +79,14 @@ const SearchItem = ({ name, activeClick, changeActiveFilter, type = 'checkbox' }
                                 }}
                                 className='underline cursor-pointer hover:text-main'>Reset</span>
                         </div>
-                        <div className='flex flex-col justify-start gap-3' onClick={e => e.stopPropagation()}>
+                        <div
+                            className='mt-3 flex flex-col justify-start gap-3'
+                            onClick={e => e.stopPropagation()}>
                             {color.map((el, index) => (
                                 <div key={index} className='flex gap-2 items-center'>
                                     <input
                                         type='checkbox'
-                                        name={el}
+                                        // name={el}
                                         value={el}
                                         onChange={handleSelect}
                                         id={el}
@@ -58,6 +97,44 @@ const SearchItem = ({ name, activeClick, changeActiveFilter, type = 'checkbox' }
                             ))}
                         </div>
                     </div>}
+
+                {type === 'input' && <div onClick={e => e.stopPropagation()}>
+                    <div
+                        onClick={e => e.stopPropagation()}
+                        className='p-4 items-center flex justify-between gap-8 border-b-2'>
+                        <span className='whitespace-nowrap'>{`The highest price is ${Number(bestPrice).toLocaleString()} VND`}</span>
+                        <span
+                            onClick={e => {
+                                e.stopPropagation()
+                                setPrice({ from: '', to: '' })
+                                changeActiveFilter(null)
+                            }}
+                            className='underline cursor-pointer hover:text-main'>Reset</span>
+                    </div>
+                    <div
+                        className='mt-3 flex items-center gap-2'>
+                        <div className='flex items-center gap-2'>
+                            <label htmlFor='from'>From</label>
+                            <input
+                                className='outline-none text-[20px]'
+                                type='number'
+                                id='from'
+                                value={price.from}
+                                onChange={e => setPrice(prev => ({ ...prev, from: e.target.value }))} />
+                        </div>
+
+                        <div className='flex items-center gap-2'>
+                            <label htmlFor='to'>To</label>
+                            <input
+                                className='outline-none text-[20px]'
+                                type='number'
+                                id='to'
+                                value={price.to}
+                                onChange={e => setPrice(prev => ({ ...prev, to: e.target.value }))} />
+                        </div>
+                    </div>
+                </div>}
+
             </div>}
         </div>
     )
