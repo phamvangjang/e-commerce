@@ -74,3 +74,19 @@ export const productInforTabs = [
         Write a review`
     }
 ]
+
+export const color = [
+    'Graphite',
+    'Gold',
+    'Sierra Blue',
+    'Silver',
+    'Pink',
+    'Blue',
+    'Midnight',
+    'Starlight',
+    'Purple',
+    'Green',
+    'White',
+    'Black',
+    'Yellow',
+]
