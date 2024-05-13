@@ -30,7 +30,7 @@ const VoteOption = ({ nameProduct, handleSubmitVoteOption }) => {
                 value={comment}
                 onChange={e => setComment(e.target.value)}
                 placeholder='write sometings..'
-                className='placeholder:italic placeholder:text-sm placeholder:text-gray-500 text-sm w-full min-h-32 outline-none border'></textarea>
+                className='p-3 placeholder:italic placeholder:text-sm placeholder:text-gray-500 text-sm w-full min-h-32 outline-none border'></textarea>
             <div className='w-full flex flex-col gap-4'>
                 <p>How do you like this Product?</p>
                 <div className='flex items-center justify-center gap-4'>

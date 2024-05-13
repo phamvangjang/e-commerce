@@ -1,6 +1,6 @@
 import React, { memo, useState, useCallback } from 'react'
 import { productInforTabs } from '../ultils/contants'
-import { Votebar, Button, VoteOption } from './'
+import { Votebar, Button, VoteOption, Comment } from './'
 import { renderStarFromNumber } from '../ultils/helpers'
 import { apiRatings } from '../apis'
 import { useDispatch, useSelector } from 'react-redux'
@@ -10,7 +10,7 @@ import path from '../ultils/path'
 import { useNavigate } from 'react-router-dom'
 
 const ProductInformation = ({ totalRatings, ratings, nameProduct, pid, rerender }) => {
-    const [activedTab, setActivedTab] = useState(1)
+    const [activedTab, setActivedTab] = useState(5)
     const dispatch = useDispatch()
     const { isLoggedIn } = useSelector(state => state.user)
     const navigate = useNavigate()
@@ -22,8 +22,8 @@ const ProductInformation = ({ totalRatings, ratings, nameProduct, pid, rerender 
             return
         }
 
-        await apiRatings({ star: score, comment, pid })
-        dispatch(showModel({isShowModel: false, modelChildren: null}))
+        await apiRatings({ star: score, comment, pid, updatedAt: Date.now() })
+        dispatch(showModel({ isShowModel: false, modelChildren: null }))
         rerender()
     }
 
@@ -69,6 +69,7 @@ const ProductInformation = ({ totalRatings, ratings, nameProduct, pid, rerender 
                 >CUSTOMER REVIEW
                 </div>
             </div>
+
             <div className='w-full border p-4 mb-8'>
                 {productInforTabs.some(el => el.id === activedTab) && productInforTabs.find(el => el.id === activedTab)?.content}
                 {activedTab === 5 &&
@@ -99,6 +100,18 @@ const ProductInformation = ({ totalRatings, ratings, nameProduct, pid, rerender 
                                 handleOnClick={handleVoteNow}>
                                 Vote now
                             </Button>
+                        </div>
+
+                        <div className='flex flex-col gap-4'>
+                                {ratings?.map(el=>(
+                                    <Comment
+                                        key={el._id}
+                                        star={el.star}
+                                        updatedAt={el.updatedAt}
+                                        comment={el.comment}
+                                        name={`${el.postedBy?.firstname} ${el.postedBy?.lastname}`}
+                                    />
+                                ))}
                         </div>
                     </div>}
             </div>
