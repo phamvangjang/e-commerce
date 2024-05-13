@@ -10,3 +10,9 @@ export const apiGetProduct = (pid) => axois({
     url: '/product/' + pid,
     method: 'get',
 })
+
+export const apiRatings = (data) => axois({
+    url: '/product/ratings',
+    method: 'put',
+    data
+})

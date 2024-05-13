@@ -1,10 +1,18 @@
-import React, { memo, useState } from 'react'
+import React, { memo, useState, useCallback } from 'react'
 import { productInforTabs } from '../ultils/contants'
-import { Votebar } from './'
+import { Votebar, Button, VoteOption } from './'
 import { renderStarFromNumber } from '../ultils/helpers'
+import { apiRatings } from '../apis'
+import { useDispatch } from 'react-redux'
+import { showModel } from '../store/app/appSlice'
 
-const ProductInformation = ({ totalRatings, totalCount }) => {
+const ProductInformation = ({ totalRatings, totalCount, nameProduct }) => {
     const [activedTab, setActivedTab] = useState(1)
+    const [isVote, setIsVote] = useState(false)
+    const dispatch = useDispatch()
+    // const toggleVote = useCallback(() => {
+    //     setIsVote(!isVote)
+    // }, [isVote])
     return (
         <div>
             <div className='flex items-center gap-2 relative bottom-[-1px]' >
@@ -28,27 +36,33 @@ const ProductInformation = ({ totalRatings, totalCount }) => {
             <div className='w-full border p-4 mb-8'>
                 {productInforTabs.some(el => el.id === activedTab) && productInforTabs.find(el => el.id === activedTab)?.content}
                 {activedTab === 5 &&
-                    <div className='flex p-4'>
-                        <div className='flex-4 border flex flex-col gap-2 items-center justify-center'>
-                            <span className='font-semibold text-[24px]'>{`${totalRatings}/5`}</span>
-                            <span className='flex gap-2 items-center'>{renderStarFromNumber(totalRatings)?.map((el, index) => (
-                                <span key={index}>{el}</span>
-                            ))}</span>
-                            <span className='italic underline text-blue-600 font-semibold'>{`${totalCount} reviewers`}</span>
+                    <div className='flex p-4 flex-col'>
+                        <div className='flex'>
+                            <div className='flex-4 border flex flex-col gap-2 items-center justify-center'>
+                                <span className='font-semibold text-[24px]'>{`${totalRatings}/5`}</span>
+                                <span className='flex gap-2 items-center'>{renderStarFromNumber(totalRatings)?.map((el, index) => (
+                                    <span key={index}>{el}</span>
+                                ))}</span>
+                                <span className='italic underline text-blue-600 font-semibold'>{`${totalCount} reviewers`}</span>
+                            </div>
+                            <div className='flex-6 border p-4 flex flex-col'>
+                                {Array.from(Array(5).keys()).reverse().map(el => (
+                                    <Votebar
+                                        key={el}
+                                        number={el + 1}
+                                        ratingTotal={5}
+                                        ratingCount={2}
+                                    />
+                                ))}
+                            </div>
                         </div>
-                        <div className='flex-6 border p-4 flex flex-col'>
-                            {Array.from(Array(5).keys()).reverse().map(el => (
-                                <Votebar
-                                    key={el}
-                                    number={el + 1}
-                                    ratingTotal={5}
-                                    ratingCount={2}
-                                />
-                            ))}
+
+                        <div className='p-4 flex flex-col items-center justify-center gap-2'>
+                            <span>Do you want to review this Product?</span>
+                            <Button handleOnClick={()=>dispatch(showModel({isShowModel: true, modelChildren: <VoteOption nameProduct={nameProduct}/>}))}>Vote now</Button>
                         </div>
                     </div>}
             </div>
-
         </div>
     )
 }
