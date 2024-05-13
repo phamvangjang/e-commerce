@@ -76,19 +76,20 @@ export const productInforTabs = [
 ]
 
 export const color = [
-    'Graphite',
-    'Gold',
-    'Sierra Blue',
+    'Brown',
+    'Gray',
     'Silver',
     'Pink',
     'Blue',
-    'Midnight',
-    'Starlight',
-    'Purple',
-    'Green',
+    'Red',
+    'Black Leather',
+    'MINERAL BLACK',
+    'Gold',
     'White',
     'Black',
-    'Yellow',
+    'Carbon gray',
+    'Quite black',
+    'Dazzling white',
 ]
 
 export const sorts = [
