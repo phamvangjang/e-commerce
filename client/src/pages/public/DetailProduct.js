@@ -17,6 +17,7 @@ const settings = {
 };
 
 const DetailProduct = () => {
+    const [update, setUpdate] = useState(false)
     const [currentImage, setCurrenImage] = useState(null)
     const { pid, title, category } = useParams()
     const [product, setProduct] = useState(null)
@@ -44,6 +45,14 @@ const DetailProduct = () => {
         }
         window.scrollTo(0, 0)
     }, [pid])
+
+    useEffect(() => {
+        if (pid) { fetchProductData() }
+    }, [update])
+
+    const rerender = useCallback(() => {
+        setUpdate(!update)
+    })
 
     const handleQuantity = useCallback((number) => {
         if (!Number(number) || Number(number) < 1) {
@@ -184,17 +193,22 @@ const DetailProduct = () => {
                     </ul>
                 </div>
             </div>
+
             <div className="w-main m-auto mt-8">
                 <ProductInformation
                     totalRatings={product?.totalRatings}
-                    totalCount={18}
+                    ratings={product?.ratings}
                     nameProduct={product?.title}
+                    pid={product?._id}
+                    rerender={rerender}
                 />
             </div>
+
             <div className="w-main m-auto">
                 <h3 className="text-[20px] font-semibold py-[15px] border-b-2 border-main uppercase">OTHER CUSTOMERS ALSO BUY:</h3>
                 <CustomSlider normal={true} products={relatedProduct} />
             </div>
+
             <div className="h-[500px]"></div>
         </div>
     )

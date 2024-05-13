@@ -3,16 +3,52 @@ import { productInforTabs } from '../ultils/contants'
 import { Votebar, Button, VoteOption } from './'
 import { renderStarFromNumber } from '../ultils/helpers'
 import { apiRatings } from '../apis'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { showModel } from '../store/app/appSlice'
+import Swal from 'sweetalert2'
+import path from '../ultils/path'
+import { useNavigate } from 'react-router-dom'
 
-const ProductInformation = ({ totalRatings, totalCount, nameProduct }) => {
+const ProductInformation = ({ totalRatings, ratings, nameProduct, pid, rerender }) => {
     const [activedTab, setActivedTab] = useState(1)
-    const [isVote, setIsVote] = useState(false)
     const dispatch = useDispatch()
-    // const toggleVote = useCallback(() => {
-    //     setIsVote(!isVote)
-    // }, [isVote])
+    const { isLoggedIn } = useSelector(state => state.user)
+    const navigate = useNavigate()
+
+    const handleSubmitVoteOption = async ({ comment, score }) => {
+
+        if (!comment || !pid || !score) {
+            alert('Missing input')
+            return
+        }
+
+        await apiRatings({ star: score, comment, pid })
+        dispatch(showModel({isShowModel: false, modelChildren: null}))
+        rerender()
+    }
+
+    const handleVoteNow = () => {
+        if (!isLoggedIn) {
+            Swal.fire({
+                text: 'Login to vote',
+                cancelButtonText: 'Cancle',
+                confirmButtonText: 'Go login',
+                title: 'Opps!',
+                showCancelButton: true
+            }).then((rs) => {
+                if (rs.isConfirmed) {
+                    navigate(`/${path.LOGIN}`)
+                }
+            })
+        } else {
+            dispatch(showModel({
+                isShowModel: true, modelChildren: <VoteOption
+                    nameProduct={nameProduct}
+                    handleSubmitVoteOption={handleSubmitVoteOption}
+                />
+            }))
+        }
+    }
     return (
         <div>
             <div className='flex items-center gap-2 relative bottom-[-1px]' >
@@ -43,15 +79,15 @@ const ProductInformation = ({ totalRatings, totalCount, nameProduct }) => {
                                 <span className='flex gap-2 items-center'>{renderStarFromNumber(totalRatings)?.map((el, index) => (
                                     <span key={index}>{el}</span>
                                 ))}</span>
-                                <span className='italic underline text-blue-600 font-semibold'>{`${totalCount} reviewers`}</span>
+                                <span className='italic underline text-blue-600 font-semibold'>{`${ratings?.length} reviewers`}</span>
                             </div>
                             <div className='flex-6 border p-4 flex flex-col'>
                                 {Array.from(Array(5).keys()).reverse().map(el => (
                                     <Votebar
                                         key={el}
                                         number={el + 1}
-                                        ratingTotal={5}
-                                        ratingCount={2}
+                                        ratingTotal={ratings?.length}
+                                        ratingCount={ratings?.filter(i => i.star === el + 1)?.length}
                                     />
                                 ))}
                             </div>
@@ -59,7 +95,10 @@ const ProductInformation = ({ totalRatings, totalCount, nameProduct }) => {
 
                         <div className='p-4 flex flex-col items-center justify-center gap-2'>
                             <span>Do you want to review this Product?</span>
-                            <Button handleOnClick={()=>dispatch(showModel({isShowModel: true, modelChildren: <VoteOption nameProduct={nameProduct}/>}))}>Vote now</Button>
+                            <Button
+                                handleOnClick={handleVoteNow}>
+                                Vote now
+                            </Button>
                         </div>
                     </div>}
             </div>
