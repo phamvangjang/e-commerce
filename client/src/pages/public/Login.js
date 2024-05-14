@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { InputField, Button } from '../../components'
+import { InputField, Button, Loading } from '../../components'
 import { apiRegister, apiLogin, apiForgotPassword, apiFinalregister } from "../../apis/user";
 import Swal from 'sweetalert2'
 import { useNavigate, useLocation, Link } from "react-router-dom";
@@ -8,6 +8,7 @@ import { login } from '../../store/user/userSlice';
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { validate } from "../../ultils/helpers";
+import { showModel } from "store/app/appSlice";
 
 const Login = () => {
     const navigate = useNavigate()
@@ -56,7 +57,13 @@ const Login = () => {
         const invalids = isRegister ? validate(payload, setInvalidFields) : validate(data, setInvalidFields)
         if (invalids === 0) {
             if (isRegister) {
+
+                dispatch(showModel({ isShowModel: true, modelChildren: <Loading /> }))
+
                 const response = await apiRegister(payload)
+
+                dispatch(showModel({ isShowModel: false, modelChildren: null }))
+
                 if (response.success) {
                     setIsVerifiedEmail(true)
                 } else Swal.fire('Failed', response.mes, 'error')
