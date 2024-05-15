@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 
 const ManageProduct = () => {
     return (
@@ -8,4 +8,4 @@ const ManageProduct = () => {
     )
 }
 
-export default ManageProduct
+export default memo(ManageProduct)

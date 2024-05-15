@@ -1,5 +1,5 @@
 import React, { memo, useRef, useEffect } from 'react'
-import icons from '../ultils/icons'
+import icons from '../../ultils/icons'
 
 const { FaStar } = icons
 

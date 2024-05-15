@@ -1,7 +1,7 @@
 import React from 'react'
 import useBreadcrumbs from 'use-react-router-breadcrumbs'
 import { Link } from 'react-router-dom'
-import icons from '../ultils/icons'
+import icons from '../../ultils/icons'
 
 const { MdArrowForwardIos } = icons
 

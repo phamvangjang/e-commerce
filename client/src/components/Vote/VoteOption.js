@@ -1,8 +1,8 @@
 import React, { memo, useRef, useEffect, useState } from 'react'
-import logo from '../assets/logo.png'
-import { voteOptions } from '../ultils/contants'
-import icons from '../ultils/icons'
-import Button from './Button'
+import logo from '../../assets/logo.png'
+import { voteOptions } from '../../ultils/contants'
+import icons from '../../ultils/icons'
+import { Button } from '../../components'
 
 const { FaStar } = icons
 const VoteOption = ({ nameProduct, handleSubmitVoteOption }) => {
@@ -38,7 +38,7 @@ const VoteOption = ({ nameProduct, handleSubmitVoteOption }) => {
                         <div
                             onClick={() => setChooseScore(el.id)}
                             key={el.id}
-                            
+
                             className='bg-gray-200 hover:bg-gray-300 cursor-pointer w-[100px] h-[100px] flex items-center justify-center flex-col gap-2'>
                             {(Number(chooseScore) && chooseScore >= el.id) ? <FaStar color='orange' /> : <FaStar color='gray' />}
                             <span>{el.text}</span>

@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { formatMoney } from '../ultils/helpers'
-import label from '../assets/label.png'
-import label_blue from '../assets/label-blue.png'
-import { renderStarFromNumber } from '../ultils/helpers'
-import { SelectOption } from './'
-import icons from "../ultils/icons";
+import { formatMoney } from '../../ultils/helpers'
+import label from '../../assets/label.png'
+import label_blue from '../../assets/label-blue.png'
+import { renderStarFromNumber } from '../../ultils/helpers'
+import { SelectOption } from '../'
+import icons from "../../ultils/icons";
 import { Link } from "react-router-dom";
-import path from "../ultils/path";
+// import path from "../ultils/path";
 
 const { FaEye, IoMdMenu, FaHeart } = icons
 

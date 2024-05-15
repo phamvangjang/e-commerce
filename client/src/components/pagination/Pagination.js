@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
-import usePagination from '../hooks/usePagination'
-import { PagiItem } from './'
+import usePagination from '../../hooks/usePagination'
+import { PagiItem } from '..'
 import { useSearchParams } from 'react-router-dom'
 
 

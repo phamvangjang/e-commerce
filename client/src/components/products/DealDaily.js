@@ -1,8 +1,8 @@
 import React, { useState, useEffect, memo } from "react";
-import icons from "../ultils/icons";
-import { apiGetProducts } from "../apis/product";
-import { renderStarFromNumber, formatMoney, secondsToHms } from '../ultils/helpers';
-import { Countdown } from './'
+import icons from "../../ultils/icons";
+import { apiGetProducts } from "../../apis/product";
+import { renderStarFromNumber, formatMoney, secondsToHms } from '../../ultils/helpers';
+import Countdown from "components/common/Countdown";
 import moment from 'moment';
 
 

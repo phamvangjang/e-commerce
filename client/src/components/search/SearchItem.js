@@ -1,9 +1,9 @@
 import React, { memo, useState, useEffect, Children } from 'react'
-import icons from '../ultils/icons'
-import { color } from '../ultils/contants'
+import icons from '../../ultils/icons'
+import { color } from '../../ultils/contants'
 import { createSearchParams, useNavigate, useParams, useSearchParams } from 'react-router-dom'
-import { apiGetProducts } from '../apis'
-import useDebounce from '../hooks/useDebounce'
+import { apiGetProducts } from '../../apis'
+import useDebounce from '../../hooks/useDebounce'
 
 const { FaAngleDown } = icons
 const SearchItem = ({ name, activeClick, changeActiveFilter, type = 'checkbox' }) => {

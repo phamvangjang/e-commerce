@@ -1,6 +1,6 @@
 import React, { memo } from 'react'
 import { useDispatch } from 'react-redux'
-import { showModel } from '../store/app/appSlice'
+import { showModel } from '../../store/app/appSlice'
 
 const Model = ({ children }) => {
     const dispatch = useDispatch()

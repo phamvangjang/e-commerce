@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { apiGetProducts } from '../apis/product';
-import { Product, CustomSlider } from './';
-import { getNewProducts } from '../store/products/asynsActions'
+import { apiGetProducts } from '../../apis/product';
+// import { Product, CustomSlider } from './';
+import Product from './Product';
+import CustomSlider from 'components/common/CustomSlider';
+import { getNewProducts } from '../../store/products/asynsActions'
 import { useDispatch, useSelector } from 'react-redux';
 
 

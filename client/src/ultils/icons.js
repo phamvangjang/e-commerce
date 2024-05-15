@@ -17,6 +17,11 @@ import { FaGift } from "react-icons/fa";
 import { FaTruck } from "react-icons/fa";
 import { FaShieldAlt } from "react-icons/fa";
 import { FaAngleDown } from "react-icons/fa";
+import { MdDashboard } from "react-icons/md";
+import { MdGroups } from "react-icons/md";
+import { AiFillProduct } from "react-icons/ai";
+import { RiBillLine } from "react-icons/ri";
+import { FaCaretDown } from "react-icons/fa";
 
 const icons = {
     RiPhoneFill,
@@ -37,7 +42,12 @@ const icons = {
     FaGift,
     FaTruck,
     FaShieldAlt,
-    FaAngleDown
+    FaAngleDown,
+    MdDashboard,
+    MdGroups,
+    AiFillProduct,
+    RiBillLine,
+    FaCaretDown
 }
 
 export default icons

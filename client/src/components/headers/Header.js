@@ -1,8 +1,8 @@
 import React, { Fragment } from "react";
-import logo from '../assets/logo.png'
-import icons from '../ultils/icons'
+import logo from '../../assets/logo.png'
+import icons from '../../ultils/icons'
 import { Link } from 'react-router-dom'
-import path from '../ultils/path'
+import path from '../../ultils/path'
 import { useSelector } from "react-redux";
 
 const { RiPhoneFill, MdEmail, FaShoppingCart, FaCircleUser } = icons
@@ -40,7 +40,7 @@ const Header = () => {
                         <span>0 item(s)</span>
                     </div>
                     <Link
-                        to={current?.role === 1973 ? `${path.ADMIN}/${path.MEMBER}` : `${path.MEMBER}/${path.PERSONAL}`}
+                        to={+current?.role === 1973 ? `${path.ADMIN}/${path.DASHBOARD}` : `${path.MEMBER}/${path.PERSONAL}`}
                         className='flex items-center justify-center px-6 gap-2 cursor-pointer'>
                         <FaCircleUser size={24} color="red" />
                         <span>Profile</span>
