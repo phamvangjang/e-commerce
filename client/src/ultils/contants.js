@@ -195,3 +195,14 @@ export const adminSidebar = [
         icons: <RiBillLine size={24} />
     },
 ]
+
+export const roles = [
+    {
+        code: 1973,
+        value: 'Admin'
+    },
+    {
+        code: 1976,
+        value: 'User'
+    },
+]

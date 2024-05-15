@@ -202,11 +202,60 @@ const resetPassword = asyncHandler(async (req, res) => {
 })
 
 const getUsers = asyncHandler(async (req, res) => {
-    const response = await User.find().select('-refreshToken -password -role')
-    return res.status(200).json({
-        success: response ? true : false,
-        users: response
-    })
+    // const response = await User.find().select('-refreshToken -password -role')
+    // return res.status(200).json({
+    //     success: response ? true : false,
+    //     users: response
+    // })
+
+    const queries = { ...req.query }
+    //Tach cac truong dac biet ra khoi query
+    const excludeFields = ['limit', 'sort', 'page', 'fields']
+    excludeFields.forEach(el => delete queries[el])
+
+    //format lai cac operator cho dung cu phap mongoose
+    let queryString = JSON.stringify(queries)
+    queryString = queryString.replace(/\b(gte|gt|lt|lte)\b/g, macthedEl => `$${macthedEl}`)
+    const formatedQueries = JSON.parse(queryString)
+
+    //Filtering 
+    if (queries?.name) formatedQueries.name = { $regex: queries.name, $options: 'i' }
+    let queryCommand = User.find(formatedQueries)
+
+    //sorting
+    if (req.query.sort) {
+        const sortBy = req.query.sort.split(',').join(' ')
+        queryCommand = queryCommand.sort(sortBy)
+    }
+
+    //fields, limiting
+    if (req.query.fields) {
+        const fields = req.query.fields.split(',').join(' ')
+        queryCommand = queryCommand.select(fields)
+    }
+    //pagination
+    //limit so object lay ve 1 goi api
+    //skip 2
+    //+req.query.page = json => number
+    const page = +req.query.page || 1
+    const limit = +req.query.limit || process.env.LIMIT_PRODUCTS
+    const skip = (page - 1) * limit
+    queryCommand.skip(skip).limit(limit)
+
+
+    //execute query
+    //so luong san pham thoa man dieu kien !== so luong sp tra ve 1 lan goi API
+    try {
+        const response = await queryCommand.exec();
+        const counts = await User.find(formatedQueries).countDocuments();
+        return res.status(200).json({
+            success: response ? true : false,
+            counts,
+            users: response ? response : 'Cannot get Users'
+        });
+    } catch (err) {
+        throw new Error(err.message);
+    }
 })
 
 const deleteUser = asyncHandler(async (req, res) => {
