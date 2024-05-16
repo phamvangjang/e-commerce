@@ -1,27 +1,27 @@
-import React, { useEffect } from 'react'
+import React, { memo } from 'react'
 import usePagination from '../../hooks/usePagination'
 import { PagiItem } from '..'
 import { useSearchParams } from 'react-router-dom'
 
 
 const Pagination = ({ totalCount }) => {
-    const pagination = usePagination(totalCount, 3)
     const [params] = useSearchParams()
-    useEffect(() => {
-        const page = params.get('page') || 1
-    })
+    const pagination = usePagination(totalCount, params.get('page') || 1)
+    // useEffect(() => {
+    //     const page = params.get('page') || 1
+    // })
 
     const range = () => {
         const currentPage = +params.get('page')
-        const pageSize = +process.env.REACT_APP_PRODUCT_LIMIT || 10
+        const pageSize = Math.min(+process.env.REACT_APP_LIMIT, totalCount) || 10
         const start = ((currentPage - 1) * pageSize) + 1
         const end = Math.min(currentPage * pageSize, totalCount)
 
         return `${start} to ${end}`
     }
     return (
-        <div className='flex w-main justify-between items-center'>
-            {!+params.get('page') && <span className='text-sm italic'>{`Showing product from 1 to ${process.env.REACT_APP_PRODUCT_LIMIT || 10} of ${totalCount} products`}</span>} 
+        <div className='flex w-full justify-between items-center'>
+            {!+params.get('page') && <span className='text-sm italic'>{`Showing product from 1 to ${Math.min(+process.env.REACT_APP_LIMIT, totalCount)} of ${totalCount} products`}</span>}
 
             {+params.get('page') && <span className='text-sm italic'>{`Show product from ${range()} of ${totalCount} products`}</span>}
             <div className='flex items-center'>
@@ -35,4 +35,4 @@ const Pagination = ({ totalCount }) => {
     )
 }
 
-export default Pagination
+export default memo(Pagination)

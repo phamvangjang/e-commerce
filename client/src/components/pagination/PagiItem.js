@@ -1,20 +1,22 @@
 import React from 'react'
 import clsx from 'clsx'
-import { useSearchParams, useNavigate, useParams, createSearchParams } from 'react-router-dom'
+import { useSearchParams, useNavigate, createSearchParams, useLocation } from 'react-router-dom'
 
 const PagiItem = ({ children }) => {
-    const { category } = useParams()
     const navigate = useNavigate()
     const [params] = useSearchParams()
+    const location = useLocation()
 
     const handlePagination = () => {
-        let param = []
-        for (let i of params.entries()) param.push(i)
-        const queries = {}
-        for (let i of param) queries[i[0]] = i[1]
+        // let param = []
+        // for (let i of params.entries()) param.push(i)
+        // const queries = {}
+        // for (let i of param) queries[i[0]] = i[1]
+        const queries = Object.fromEntries([...params])
         if (Number(children)) queries.page = children
         navigate({
-            pathname: `/${category}`,
+            pathname: location.pathname,
+            // pathname: `/${category}`,
             search: createSearchParams(queries).toString()
         })
         console.log(queries)

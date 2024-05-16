@@ -1,24 +1,48 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { apiGetUsers } from 'apis'
 import { roles } from 'ultils/contants'
 import moment from 'moment'
+import { InputField, Pagination } from 'components'
+import useDebounce from 'hooks/useDebounce'
+import { useSearchParams } from 'react-router-dom'
 
 const ManageUser = () => {
+    const [queries, setQueries] = useState({
+        q: ''
+    })
+    const [params] = useSearchParams()
     const [users, setUsers] = useState(null)
     const fetchUsers = async (params) => {
-        const response = await apiGetUsers(params)
+        const response = await apiGetUsers({ ...params, limit: process.env.REACT_APP_LIMIT })
         if (response.success) setUsers(response)
         console.log(response)
     }
+
+    const queriesDebounce = useDebounce(queries.q, 800)
     useEffect(() => {
-        fetchUsers()
-    }, [])
+        const queries = Object.fromEntries([...params])
+        if (queriesDebounce) queries.q = queriesDebounce
+        fetchUsers(queries)
+    }, [queriesDebounce, params])
+
+    console.log(users)
+
     return (
         <div className='w-full'>
             <h1 className='h-[80px] flex justify-between items-center text-3xl font-bold px-4 border-b'>
                 <span>Manage User</span>
             </h1>
             <div className='w-full p-4'>
+                <div className='flex justify-end py-4'>
+                    <InputField
+                        nameKey={'q'}
+                        value={queries.q}
+                        setValue={setQueries}
+                        style='w-[500px] text-gray-900'
+                        placeholder={'Search name or email user...'}
+                        isHideLabel
+                    />
+                </div>
                 <table className='table-auto mb-6 text-left w-full'>
                     <thead className='font-bold bg-gray-600 text-[13px] border border-gray-300 text-center'>
                         <tr className=''>
@@ -50,6 +74,12 @@ const ManageUser = () => {
                         ))}
                     </tbody>
                 </table>
+
+                <div className='w-full flex justify-end'>
+                    <Pagination
+                        totalCount={users?.counts}
+                    />
+                </div>
             </div>
         </div>
     )
