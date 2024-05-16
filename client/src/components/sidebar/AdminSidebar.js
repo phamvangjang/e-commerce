@@ -5,8 +5,8 @@ import { NavLink } from 'react-router-dom'
 import clsx from 'clsx'
 import { FaCaretDown, FaCaretRight } from "react-icons/fa";
 
-const activedStyle = 'px-4 py-2 flex items-center text-gray-200 gap-2 bg-gray-500'
-const noActivedStyle = 'px-4 py-2 flex items-center text-gray-200 gap-2 hover:bg-gray-400'
+const activedStyle = 'px-4 py-2 flex items-center text-gray-900 gap-2 bg-gray-500'
+const noActivedStyle = 'px-4 py-2 flex items-center text-gray-900 gap-2 hover:bg-gray-300'
 
 const AdminSidebar = () => {
     const [active, setActive] = useState([])
@@ -15,7 +15,7 @@ const AdminSidebar = () => {
         else setActive(prev => [...prev, tabID])
     }
     return (
-        <div className='py-4 bg-zinc-800 h-full'>
+        <div className='py-4 bg-zinc-200 h-full'>
             <div className='flex flex-col justify-center items-center py-4 gap-2'>
                 <img
                     src={logo}
@@ -38,8 +38,8 @@ const AdminSidebar = () => {
                         </NavLink>}
                         {el.type === 'PARENT' && <div
                             onClick={() => handleShowTabs(el.id)}
-                            className=' flex flex-col text-gray-200 '>
-                            <div className='flex items-center gap-2 px-4 py-2 hover:bg-gray-400 justify-between'>
+                            className=' flex flex-col text-gray-900 '>
+                            <div className='flex items-center gap-2 px-4 py-2 hover:bg-gray-300 justify-between'>
                                 <div className='flex items-center gap-2 cursor-pointer '>
                                     <span>{el.icons}</span>
                                     <span>{el.text}</span>
