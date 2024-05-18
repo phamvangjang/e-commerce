@@ -1,11 +1,13 @@
 import React, { memo, useCallback, useEffect, useState } from 'react'
 import { InputForm, Pagination } from 'components'
 import { useForm } from 'react-hook-form'
-import { apiGetProducts } from 'apis'
+import { apiGetProducts, apiDeleteProduct } from 'apis'
 import moment from 'moment'
 import { useSearchParams, createSearchParams, useNavigate, useLocation } from 'react-router-dom'
 import useDebounce from 'hooks/useDebounce'
 import UpdateProduct from './UpdateProduct'
+import Swal from 'sweetalert2'
+import { toast } from 'react-toastify'
 
 const ManageProduct = () => {
     const navigate = useNavigate()
@@ -51,6 +53,21 @@ const ManageProduct = () => {
         fetchProducts(searchParams)
     }, [params, update])
 
+    const handleDeleteProduct = (pid) => {
+        Swal.fire({
+            title: 'Warning!',
+            text: 'Do you want delete this product?',
+            icon: 'warning',
+            showCancelButton: true
+        }).then(async (rs) => {
+            if (rs.isConfirmed) {
+                const response = await apiDeleteProduct(pid)
+                if (response.success) toast.success(response.mes)
+                else toast.error(response.mes)
+                render()
+            }
+        })
+    }
     // console.log(products)
     return (
         <div className='w-full flex flex-col gap-4 relative'>
@@ -59,6 +76,7 @@ const ManageProduct = () => {
                 <UpdateProduct
                     editProduct={editProduct}
                     render={render}
+                    setEditProduct={setEditProduct}
                 />
             </div>}
 
@@ -128,6 +146,7 @@ const ManageProduct = () => {
                                     className='text-orange-500 hover:underline cursor-pointer px-1'>
                                     Edit</span>
                                 <span
+                                    onClick={() => handleDeleteProduct(el._id)}
                                     className='text-orange-500 hover:underline cursor-pointer px-1'>
                                     Remove</span>
                             </td>

@@ -139,7 +139,7 @@ const CreateProduct = () => {
                             label='Quantity'
                             register={register}
                             errors={errors}
-                            id='price'
+                            id='quantity'
                             validate={{
                                 required: 'Need fill this field'
                             }}

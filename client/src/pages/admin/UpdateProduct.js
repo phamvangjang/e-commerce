@@ -5,9 +5,9 @@ import { validate, getBase64 } from 'ultils/helpers'
 import { toast } from 'react-toastify'
 import { useDispatch, useSelector } from 'react-redux'
 import { showModel } from 'store/app/appSlice'
-import { apiCreateProduct } from 'apis'
+import { apiUpdateProduct } from 'apis'
 
-const UpdateProduct = ({ editProduct, render }) => {
+const UpdateProduct = ({ editProduct, render, setEditProduct }) => {
     const { register, handleSubmit, formState: { errors }, reset, watch } = useForm()
 
     const dispath = useDispatch()
@@ -32,7 +32,6 @@ const UpdateProduct = ({ editProduct, render }) => {
         setPreview(prev => ({ ...prev, thumb: base64Thumb }))
     }
 
-
     //bug ko show len duoc 2 hinh
     const handlePreviewImages = async (files) => {
         const imagesPreview = []
@@ -43,7 +42,7 @@ const UpdateProduct = ({ editProduct, render }) => {
                 return
             }
             const base64 = await getBase64(file)
-            imagesPreview.push({ name: file.name, path: base64 })
+            imagesPreview.push(base64)
         }
         setPreview(prev => ({ ...prev, images: imagesPreview }))
 
@@ -70,55 +69,64 @@ const UpdateProduct = ({ editProduct, render }) => {
     }, [editProduct])
 
     useEffect(() => {
-        if (watch('thumb'))
+        if (watch('thumb') instanceof FileList && watch('thumb').length > 0)
             handlePreviewThumb(watch('thumb')[0])
     }, [watch('thumb')])
 
     useEffect(() => {
-        if (watch('images'))
+        if (watch('images') instanceof FileList && watch('images').length > 0)
             handlePreviewImages(watch('images'))
     }, [watch('images')])
 
-    const handleCreateProduct = async (data) => {
+    const handleUpdateProduct = async (data) => {
         const invalids = validate(payload, setInvalidFields)
         if (invalids === 0) {
-            if (data.category) data.category = categories?.find(el => el._id === data.category)?.title
+            if (data.category) data.category = categories?.find(el => el.title === data.category)?.title
             const finalPayload = { ...data, ...payload }
+
             const formData = new FormData()
             for (let i of Object.entries(finalPayload)) formData.append(i[0], i[1])
 
-            if (finalPayload.thumb) formData.append('thumb', finalPayload.thumb[0])
+            if (finalPayload.thumb) formData.append('thumb',
+                finalPayload?.thumb?.length === 0
+                    ? preview.thumb
+                    : finalPayload.thumb[0])
             if (finalPayload.images) {
-                for (let image of finalPayload.images) formData.append('images', image)
+                const images = finalPayload?.image?.length === 0
+                    ? preview.images
+                    : finalPayload.images
+                for (let image of images) formData.append('images', image)
             }
 
-            // Display the key/value pairs
-            // for (var pair of formData.entries()) {
-            //     console.log(pair[0] + ', ' + pair[1]);
-            // }
+            
             dispath(showModel({ isShowModel: true, modelChildren: <Loading /> }))
-            const response = await apiCreateProduct(formData)
+            const response = await apiUpdateProduct(formData, editProduct._id)
             dispath(showModel({ isShowModel: false, modelChildren: null }))
+            console.log(response)
+
             if (response.success) {
                 toast.success(response.mes)
-                reset()
-                setPayload({
-                    thumb: '',
-                    images: []
-                })
+                render()
+                setEditProduct(null)
             } else toast.error(response.mes)
         }
     }
     return (
         <div className='w-full flex flex-col gap-4 relative'>
             <div className='h-[70px] w-full'></div>
-            <div className='bg-gray-100 p-4 border-b w-full justify-between items-center border-gray-900 fixed'>
+            <div className='right-0 left-[330px] top-0 bg-gray-100 p-4 border-b justify-between items-center border-gray-900 fixed flex'>
                 <h1 className='text-3xl font-bold tracking-tight'>Update Product</h1>
+
+                <span
+                    onClick={() => setEditProduct(null)}
+                    className='text-main hover:underline cursor-pointer text-2xl'>
+                    Cancle
+                </span>
             </div>
 
             <div className='p-4'>
                 <form
-                    onSubmit={handleSubmit(handleCreateProduct)}
+                    onSubmit={handleSubmit(handleUpdateProduct)}
                 >
                     <InputForm
                         label='Name Product'
@@ -151,7 +159,7 @@ const UpdateProduct = ({ editProduct, render }) => {
                             label='Quantity'
                             register={register}
                             errors={errors}
-                            id='price'
+                            id='quantity'
                             validate={{
                                 required: 'Need fill this field'
                             }}
@@ -211,7 +219,7 @@ const UpdateProduct = ({ editProduct, render }) => {
                         <input
                             type='file'
                             id='thumb'
-                            {...register('thumb', { required: 'Need fill this field' })}
+                            {...register('thumb')}
                         />
                         {errors['thumb'] && <small
                             className='text-xs text-main'>
@@ -233,7 +241,7 @@ const UpdateProduct = ({ editProduct, render }) => {
                             type='file'
                             id='product'
                             multiple
-                            {...register('images', { required: 'Need fill this field' })}
+                            {...register('images')}
                         />
                         {errors['images'] && <small
                             className='text-xs text-main'

@@ -22,3 +22,14 @@ export const apiCreateProduct = (data) => axois({
     method: 'post',
     data
 })
+
+export const apiUpdateProduct = (data, pid) => axois({
+    url: '/product/' + pid,
+    method: 'put',
+    data
+})
+
+export const apiDeleteProduct = (pid) => axois({
+    url: '/product/' + pid,
+    method: 'delete',
+})
