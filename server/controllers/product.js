@@ -165,7 +165,7 @@ const ratings = asyncHandler(async (req, res) => {
 
     await updatedProduct.save()
     return res.status(200).json({
-        status: true,
+        success: true,
         updatedProduct
     })
 })
@@ -175,7 +175,7 @@ const uploadImagesProduct = asyncHandler(async (req, res) => {
     if (!req.files) throw new Error('Missing inputs')
     const response = await Product.findByIdAndUpdate(pid, { $push: { images: { $each: req.files.map(el => el.path) } } }, { new: true })
     return res.status(200).json({
-        status: response ? true : false,
+        success: response ? true : false,
         updatedProduct: response ? response : 'Can not upload images product'
     })
 })
@@ -188,8 +188,8 @@ const addVarriant = asyncHandler(async (req, res) => {
     if (!(title && price && color)) throw new Error('Missing inputs')
     const response = await Product.findByIdAndUpdate(pid, { $push: { varriants: { color, price, title, thumb, images, sku: makeSKU().toUpperCase() } } }, { new: true })
     return res.status(200).json({
-        status: response ? true : false,
-        response: response ? response : 'Can not upload images product'
+        success: response ? true : false,
+        mes: response ? 'Add varriant product successfully' : 'Can not add varriant of product'
     })
 })
 module.exports = {

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useFetcher, useParams } from "react-router-dom";
 import { apiGetProduct, apiGetProducts } from "../../apis";
 import { Breadcrumb, Button, SelectOption, SelectQuantity, ProductInformation, CustomSlider } from "../../components";
 import Slider from "react-slick";
@@ -7,6 +7,7 @@ import ReactImageMagnify from 'react-image-magnify';
 import { formatMoney, formatPrice, renderStarFromNumber } from "../../ultils/helpers";
 import icons from "../../ultils/icons";
 import DOMPurify from "dompurify";
+import clsx from "clsx";
 
 const { FaShieldAlt, FaTruck, FaReply, FaPhoneAlt, FaGift } = icons
 const settings = {
@@ -20,10 +21,18 @@ const settings = {
 const DetailProduct = () => {
     const [update, setUpdate] = useState(false)
     const [currentImage, setCurrenImage] = useState(null)
-    const { pid, title, category } = useParams()
+    const { pid, category } = useParams()
     const [product, setProduct] = useState(null)
     const [quantity, setQuantity] = useState(1)
     const [relatedProduct, setRelatedProduct] = useState(null)
+    const [varriants, setVarriants] = useState(null)
+    const [currentProduct, setCurrentProduct] = useState({
+        title: '',
+        thumb: '',
+        images: [],
+        price: '',
+        color: ''
+    })
     const fetchProductData = async () => {
         const response = await apiGetProduct(pid)
         // console.log(response)
@@ -35,9 +44,22 @@ const DetailProduct = () => {
 
     const fetchProducts = async () => {
         const response = await apiGetProducts({ category })
-        console.log(response)
+        // console.log(response)
         if (response.success) setRelatedProduct(response.products)
     }
+
+    useEffect(() => {
+        if (varriants) {
+            setCurrentProduct({
+                title: product?.varriants?.find(el => el.sku === varriants)?.title,
+                color: product?.varriants?.find(el => el.sku === varriants)?.color,
+                price: product?.varriants?.find(el => el.sku === varriants)?.price,
+                images: product?.varriants?.find(el => el.sku === varriants)?.images,
+                thumb: product?.varriants?.find(el => el.sku === varriants)?.thumb,
+
+            })
+        }
+    })
 
     useEffect(() => {
         if (pid) {
@@ -73,12 +95,16 @@ const DetailProduct = () => {
         e.stopPropagation()
         setCurrenImage(el)
     }
+
+    console.log(product)
     return (
         <div className="w-full">
             <div className="h-[80px] flex justify-center items-center bg-gray-200">
                 <div className="w-main">
-                    <h3>{title}</h3>
-                    <Breadcrumb title={title} category={category} />
+                    <h3>{currentProduct?.title || product?.title}</h3>
+                    <Breadcrumb
+                        title={currentProduct?.title || product?.title}
+                        category={category} />
                 </div>
             </div>
 
@@ -89,10 +115,10 @@ const DetailProduct = () => {
                             smallImage: {
                                 alt: '',
                                 isFluidWidth: true,
-                                src: currentImage,
+                                src: currentProduct.thumb || currentImage,
                             },
                             largeImage: {
-                                src: currentImage,
+                                src: currentProduct.thumb || currentImage,
                                 width: 1800,
                                 height: 1800
                             }
@@ -101,7 +127,18 @@ const DetailProduct = () => {
 
                     <div className="w-[460px]">
                         <Slider {...settings} className="w-full gap-2 mt-8 flex">
-                            {product?.images?.map(el => (
+                            {currentProduct.images.length === 0 && product?.images?.map(el => (
+                                <div key={el} className="">
+                                    <img
+                                        onClick={e => handleClickImage(e, el)}
+                                        src={el}
+                                        alt="img-product-other"
+                                        className="cursor-pointer p-3 w-[140px h-[140px] object-contain border border-x-2 border-y-2"
+                                    />
+                                </div>
+                            ))}
+
+                            {currentProduct.images.length > 0 && currentProduct?.images?.map(el => (
                                 <div key={el} className="">
                                     <img
                                         onClick={e => handleClickImage(e, el)}
@@ -117,19 +154,67 @@ const DetailProduct = () => {
 
                 <div className="flex-4 pr-[20px] flex flex-col gap-4">
                     <div className="flex items-center justify-between">
-                        <h2 className="text-[30px] font-semibold">{`${formatMoney(formatPrice(product?.price))} VND`}</h2>
-                        <span className="text-sm text-main">{`Inventory: ${product?.quantity}`}</span>
+                        <h2
+                            className="text-[30px] font-semibold">
+                            {`${formatMoney(formatPrice(currentProduct.price || product?.price))} VND`}
+                        </h2>
+                        <span
+                            className="text-sm text-main">
+                            {`Inventory: ${product?.quantity}`}
+                        </span>
                     </div>
                     <div className="flex items-center gap-1">
                         {renderStarFromNumber(product?.totalRatings)?.map((el, index) => (<span key={index}>{el}</span>))}
                         <span className="text-sm text-main italic">{`(Sold: ${product?.sold} Unit)`}</span>
                     </div>
-                    <ul className="list-square pl-4 text-sm text-gray-500">
-                        {product?.description?.length > 1 && product.description?.map(el => (<li className="leading-6" key={el}>{el}</li>))}
+                    <ul
+                        className="list-square pl-4 text-sm text-gray-500">
+                        {product?.description?.length > 1 && product.description?.map(el => (<li
+                            className="leading-6"
+                            key={el}>{el}</li>))}
                         {product?.description?.length === 1 && <div
                             className="text-sm line-clamp-[20]"
                             dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(product?.description[0]) }}></div>}
                     </ul>
+                    <div className="flex  gap-4 my-4">
+                        <span className="font-bold">Color: </span>
+                        <div className="flex flex-wrap gap-4 items-center w-full">
+                            <div
+                                onClick={() => setVarriants(null)}
+                                className={clsx("cursor-pointer flex items-center gap-2 p-2 border",
+                                    !varriants
+                                    && 'border-red-500'
+                                )}>
+                                <img
+                                    src={product?.thumb}
+                                    alt="thumb"
+                                    className="w-12 h-12 rounded-md object-cover"
+                                />
+                                <span className="flex flex-col">
+                                    <span>{product?.color}</span>
+                                    <span className="text-sm">{product?.price}</span>
+                                </span>
+                            </div>
+                            {product?.varriants?.map(el => (
+                                <div
+                                    onClick={() => setVarriants(el?.sku)}
+                                    className={clsx("cursor-pointer flex items-center gap-2 p-2 border",
+                                        varriants === el.sku
+                                        && 'border-red-500'
+                                    )}>
+                                    <img
+                                        src={el?.thumb}
+                                        alt="thumb"
+                                        className="w-8 h-8 rounded-md object-cover"
+                                    />
+                                    <span className="flex flex-col">
+                                        <span>{el?.color}</span>
+                                        <span className="text-sm">{el?.price}</span>
+                                    </span>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
                     <div className="flex flex-col gap-6">
                         <div className="flex gap-2 items-center">
                             <span className="uppercase font-bold">Quantity</span>

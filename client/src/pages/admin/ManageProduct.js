@@ -126,6 +126,7 @@ const ManageProduct = () => {
                         <th className='border border-gray-500 py-2'>Sold</th>
                         <th className='border border-gray-500 py-2'>Color</th>
                         <th className='border border-gray-500 py-2'>Rating</th>
+                        <th className='border border-gray-500 py-2'>Varriants count</th>
                         <th className='border border-gray-500 py-2'>Update At</th>
                         <th className='border border-gray-500 py-2'>Action</th>
                     </tr>
@@ -151,6 +152,7 @@ const ManageProduct = () => {
                             <td className='border border-gray-500 py-2 text-center'>{el.sold}</td>
                             <td className='border border-gray-500 py-2 text-center'>{el.color}</td>
                             <td className='border border-gray-500 py-2 text-center'>{el.totalRatings}</td>
+                            <td className='border border-gray-500 py-2 text-center'>{el?.varriants?.length || 0}</td>
                             <td className='border border-gray-500 py-2 text-center'>{moment(el.updatedAt).format('DD/MM/YYYY')}</td>
                             <td className='border border-gray-500 py-2 text-center '>
                                 <div className='flex gap-1 items-center justify-center'>

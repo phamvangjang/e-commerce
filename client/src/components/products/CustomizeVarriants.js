@@ -6,7 +6,7 @@ import Button from 'components/buttons/Button'
 import { getBase64 } from 'ultils/helpers'
 import { toast } from 'react-toastify'
 import Swal from 'sweetalert2'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { showModel } from 'store/app/appSlice'
 import Loading from 'components/common/Loading'
 import { apiAddVarriant } from 'apis'
@@ -53,7 +53,14 @@ const CustomizeVarriants = ({ customizeVarriant, setCustomizeVarriant, render })
             dispath(showModel({ isShowModel: true, modelChildren: <Loading /> }))
             const response = await apiAddVarriant(formData, customizeVarriant._id)
             dispath(showModel({ isShowModel: false, modelChildren: null }))
-            console.log(response)
+            if (response.success) {
+                toast.success(response.mes)
+                reset()
+                setPreview({
+                    thumb: '',
+                    images: []
+                })
+            } else toast.error(response.mes)
         }
     }
 
