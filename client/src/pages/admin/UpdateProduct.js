@@ -31,8 +31,7 @@ const UpdateProduct = ({ editProduct, render, setEditProduct }) => {
         const base64Thumb = await getBase64(file)
         setPreview(prev => ({ ...prev, thumb: base64Thumb }))
     }
-
-    //bug ko show len duoc 2 hinh
+    
     const handlePreviewImages = async (files) => {
         const imagesPreview = []
         for (let file of files) {
@@ -45,7 +44,6 @@ const UpdateProduct = ({ editProduct, render, setEditProduct }) => {
             imagesPreview.push(base64)
         }
         setPreview(prev => ({ ...prev, images: imagesPreview }))
-
     }
 
     useEffect(() => {
@@ -83,22 +81,18 @@ const UpdateProduct = ({ editProduct, render, setEditProduct }) => {
         if (invalids === 0) {
             if (data.category) data.category = categories?.find(el => el.title === data.category)?.title
             const finalPayload = { ...data, ...payload }
+            finalPayload.thumb = data?.thumb?.length === 0
+                ? preview.thumb
+                : data.thumb[0]
 
             const formData = new FormData()
             for (let i of Object.entries(finalPayload)) formData.append(i[0], i[1])
+            finalPayload.images = data?.images?.length === 0
+                ? preview.images
+                : data.images
 
-            if (finalPayload.thumb) formData.append('thumb',
-                finalPayload?.thumb?.length === 0
-                    ? preview.thumb
-                    : finalPayload.thumb[0])
-            if (finalPayload.images) {
-                const images = finalPayload?.image?.length === 0
-                    ? preview.images
-                    : finalPayload.images
-                for (let image of images) formData.append('images', image)
-            }
+            for (let image of finalPayload.images) formData.append('images', image)
 
-            
             dispath(showModel({ isShowModel: true, modelChildren: <Loading /> }))
             const response = await apiUpdateProduct(formData, editProduct._id)
             dispath(showModel({ isShowModel: false, modelChildren: null }))

@@ -1,5 +1,5 @@
 import React, { memo, useCallback, useEffect, useState } from 'react'
-import { InputForm, Pagination } from 'components'
+import { CustomizeVarriants, InputForm, Pagination } from 'components'
 import { useForm } from 'react-hook-form'
 import { apiGetProducts, apiDeleteProduct } from 'apis'
 import moment from 'moment'
@@ -8,6 +8,9 @@ import useDebounce from 'hooks/useDebounce'
 import UpdateProduct from './UpdateProduct'
 import Swal from 'sweetalert2'
 import { toast } from 'react-toastify'
+import icons from 'ultils/icons'
+
+const { RiDeleteBin6Fill, FaEdit, BiSolidCustomize } = icons
 
 const ManageProduct = () => {
     const navigate = useNavigate()
@@ -17,6 +20,7 @@ const ManageProduct = () => {
     const [counts, setCounts] = useState(0)
     const [editProduct, setEditProduct] = useState(null)
     const [update, setUpdate] = useState(false)
+    const [customizeVarriant, setCustomizeVarriant] = useState(null)
     const render = useCallback(() => {
         setUpdate(!update)
     })
@@ -80,6 +84,14 @@ const ManageProduct = () => {
                 />
             </div>}
 
+            {customizeVarriant && <div className='absolute inset-0 min-h-screen bg-gray-100 z-50'>
+                <CustomizeVarriants
+                    customizeVarriant={customizeVarriant}
+                    render={render}
+                    setCustomizeVarriant={setCustomizeVarriant}
+                />
+            </div>}
+
             <div className='h-[70px] w-full'></div>
 
             <div className='bg-gray-100 p-4 border-b w-full justify-between items-center border-gray-900 fixed top-0'>
@@ -140,15 +152,21 @@ const ManageProduct = () => {
                             <td className='border border-gray-500 py-2 text-center'>{el.color}</td>
                             <td className='border border-gray-500 py-2 text-center'>{el.totalRatings}</td>
                             <td className='border border-gray-500 py-2 text-center'>{moment(el.updatedAt).format('DD/MM/YYYY')}</td>
-                            <td className='border border-gray-500 py-2 text-center'>
-                                <span
-                                    onClick={() => setEditProduct(el)}
-                                    className='text-orange-500 hover:underline cursor-pointer px-1'>
-                                    Edit</span>
-                                <span
-                                    onClick={() => handleDeleteProduct(el._id)}
-                                    className='text-orange-500 hover:underline cursor-pointer px-1'>
-                                    Remove</span>
+                            <td className='border border-gray-500 py-2 text-center '>
+                                <div className='flex gap-1 items-center justify-center'>
+                                    <span
+                                        onClick={() => setEditProduct(el)}
+                                        className='text-orange-400 text-[20px]  hover:text-orange-700 hover:underline cursor-pointer px-1'>
+                                        <FaEdit /></span>
+                                    <span
+                                        onClick={() => handleDeleteProduct(el._id)}
+                                        className='text-orange-400 text-[20px]  hover:text-orange-700 hover:underline cursor-pointer px-1'>
+                                        <RiDeleteBin6Fill /></span>
+                                    <span
+                                        onClick={() => setCustomizeVarriant(el)}
+                                        className='text-orange-400 text-[20px]  hover:text-orange-700 hover:underline cursor-pointer px-1'>
+                                        <BiSolidCustomize /></span>
+                                </div>
                             </td>
                         </tr>
                     ))}

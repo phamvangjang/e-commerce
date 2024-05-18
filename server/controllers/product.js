@@ -1,6 +1,7 @@
 const Product = require('../models/product')
 const asyncHandler = require('express-async-handler')
 const slugify = require('slugify')
+const makeSKU = require('uniqid')
 
 const createProduct = asyncHandler(async (req, res) => {
     const { title, description, brand, price, category, color } = req.body
@@ -178,6 +179,19 @@ const uploadImagesProduct = asyncHandler(async (req, res) => {
         updatedProduct: response ? response : 'Can not upload images product'
     })
 })
+
+const addVarriant = asyncHandler(async (req, res) => {
+    const { pid } = req.params;
+    const { title, price, color } = req.body
+    const thumb = req?.files?.thumb[0]?.path
+    const images = req.files?.images?.map(el => el.path)
+    if (!(title && price && color)) throw new Error('Missing inputs')
+    const response = await Product.findByIdAndUpdate(pid, { $push: { varriants: { color, price, title, thumb, images, sku: makeSKU().toUpperCase() } } }, { new: true })
+    return res.status(200).json({
+        status: response ? true : false,
+        response: response ? response : 'Can not upload images product'
+    })
+})
 module.exports = {
     createProduct,
     getProduct,
@@ -185,5 +199,6 @@ module.exports = {
     updateProduct,
     deleteProduct,
     ratings,
-    uploadImagesProduct
+    uploadImagesProduct, 
+    addVarriant
 }

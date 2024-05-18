@@ -22,6 +22,9 @@ import { MdGroups } from "react-icons/md";
 import { AiFillProduct } from "react-icons/ai";
 import { RiBillLine } from "react-icons/ri";
 import { FaCaretDown } from "react-icons/fa";
+import { RiDeleteBin6Fill } from "react-icons/ri";
+import { FaEdit } from "react-icons/fa";
+import { BiSolidCustomize } from "react-icons/bi";
 
 const icons = {
     RiPhoneFill,
@@ -47,7 +50,10 @@ const icons = {
     MdGroups,
     AiFillProduct,
     RiBillLine,
-    FaCaretDown
+    FaCaretDown,
+    RiDeleteBin6Fill,
+    FaEdit,
+    BiSolidCustomize
 }
 
 export default icons
