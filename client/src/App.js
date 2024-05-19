@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom'
 import { Login, Home, Public, FAQ, Services, DetailProduct, Blogs, Products, FinalRegister, ResetPassword } from './pages/public'
 import { AdminLayout, CreateProduct, Dashboard, ManageOrder, ManageUser, ManageProduct } from './pages/admin'
-import { MemberLayout, Personal } from './pages/member'
+import { MemberLayout, Personal, History, MyCart, Wishlist } from './pages/member'
 import path from './ultils/path';
 import { getCategories } from './store/app/asyncAction'
 import { useDispatch, useSelector } from 'react-redux'
@@ -42,6 +42,9 @@ function App() {
 
         <Route path={path.MEMBER} element={<MemberLayout />}>
           <Route path={path.PERSONAL} element={<Personal />} />
+          <Route path={path.HISTORY} element={<History />} />
+          <Route path={path.MY_CART} element={<MyCart />} />
+          <Route path={path.WISHLIST} element={<Wishlist />} />
         </Route>
 
         <Route path={path.FINAL_REGISTER} element={<FinalRegister />} />

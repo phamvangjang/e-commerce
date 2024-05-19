@@ -196,6 +196,37 @@ export const adminSidebar = [
     },
 ]
 
+export const memberSidebar = [
+    {
+        id: 1,
+        type: 'SINGLE',
+        text: 'Personal',
+        path: `/${path.MEMBER}/${path.PERSONAL}`,
+        icons: <MdDashboard size={24}/>
+    },
+    {
+        id: 2,
+        type: 'SINGLE',
+        text: 'My cart',
+        path: `/${path.MEMBER}/${path.MY_CART}`,
+        icons: <MdGroups size={24} />
+    },
+    {
+        id: 3,
+        type: 'SINGLE',
+        text: 'Buy histories',
+        path: `/${path.MEMBER}/${path.HISTORY}`,
+        icons: <RiBillLine size={24} />
+    },
+    {
+        id: 4,
+        type: 'SINGLE',
+        text: 'Wish list',
+        path: `/${path.MEMBER}/${path.WISHLIST}`,
+        icons: <RiBillLine size={24} />
+    },
+]
+
 export const roles = [
     {
         code: 1973,
