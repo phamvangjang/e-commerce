@@ -115,7 +115,7 @@ const DetailProduct = ({ isQuickView, data }) => {
             className="w-full ">
             {!isQuickView && <div className="h-[80px] flex justify-center items-center bg-gray-200">
                 <div className="w-main">
-                    <h3>{currentProduct?.title || product?.title}</h3>
+                    <h3 className="font-bold uppercase">{currentProduct?.title || product?.title}</h3>
                     <Breadcrumb
                         title={currentProduct?.title || product?.title}
                         category={category} />

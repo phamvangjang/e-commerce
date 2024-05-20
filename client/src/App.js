@@ -1,8 +1,33 @@
 import React, { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom'
-import { Login, Home, Public, FAQ, Services, DetailProduct, Blogs, Products, FinalRegister, ResetPassword } from './pages/public'
-import { AdminLayout, CreateProduct, Dashboard, ManageOrder, ManageUser, ManageProduct } from './pages/admin'
-import { MemberLayout, Personal, History, MyCart, Wishlist } from './pages/member'
+import {
+  Login,
+  Home,
+  Public,
+  FAQ,
+  Services,
+  DetailProduct,
+  Blogs,
+  Products,
+  FinalRegister,
+  ResetPassword,
+  DetailCart
+} from './pages/public'
+import {
+  AdminLayout,
+  CreateProduct,
+  Dashboard,
+  ManageOrder,
+  ManageUser,
+  ManageProduct
+} from './pages/admin'
+import {
+  MemberLayout,
+  Personal,
+  History,
+  MyCart,
+  Wishlist
+} from './pages/member'
 import path from './ultils/path';
 import { getCategories } from './store/app/asyncAction'
 import { useDispatch, useSelector } from 'react-redux'
@@ -35,6 +60,7 @@ function App() {
           <Route path={path.OUR_SERVICE} element={<Services />} />
           <Route path={path.PRODUCTS} element={<Products />} />
           <Route path={path.RESET_PASSWORD} element={<ResetPassword />} />
+          <Route path={path.DETAIL_CART} element={<DetailCart />} />
           <Route path={path.ALL} element={<Home />} />
 
         </Route>
