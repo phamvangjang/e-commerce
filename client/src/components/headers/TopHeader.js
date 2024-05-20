@@ -40,7 +40,7 @@ const TopHeader = () => {
                             className='cursor-pointer p-2 hover:text-gray-600'><LuLogOut size={20} /></span>
 
                     </div>
-                    : <Link className='hover:text-gray-800' to={`/${path.LOGIN}`}>Sign In or Create Account</Link>
+                    : <Link className='hover:text-gray-800 p-2' to={`/${path.LOGIN}`}>Sign In or Create Account</Link>
                 }
             </div>
         </div>

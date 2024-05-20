@@ -1,16 +1,17 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, memo, useEffect, useState } from "react";
 import logo from '../../assets/logo.png'
 import icons from '../../ultils/icons'
 import { Link } from 'react-router-dom'
 import path from '../../ultils/path'
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "store/user/userSlice";
+import withBaseCompoment from "hocs/withBaseCompoment";
+import { showCart } from "store/app/appSlice";
 
 const { RiPhoneFill, MdEmail, FaShoppingCart, FaCircleUser } = icons
-const Header = () => {
+const Header = ({ dispatch }) => {
     const { current } = useSelector(state => state.user)
     const [isShowOption, setIsShowOption] = useState(false)
-    const dispath = useDispatch()
     useEffect(() => {
         const handleClickoutOptions = (e) => {
             const profile = document.getElementById('profile')
@@ -38,6 +39,7 @@ const Header = () => {
                         Mon-Sat 9:00AM - 8:00PM
                     </span>
                 </div>
+
                 <div className='flex flex-col items-center px-6 border-r'>
                     <span className='flex gap-4 items-center'>
                         <MdEmail color='red' />
@@ -49,7 +51,9 @@ const Header = () => {
                 </div>
 
                 {current && <Fragment>
-                    <div className='flex items-center justify-center px-6 border-r gap-2 cursor-pointer'>
+                    <div
+                        onClick={() => dispatch(showCart())}
+                        className='flex items-center justify-center px-6 border-r gap-2 cursor-pointer'>
                         <FaShoppingCart color='red' />
                         <span>{`${current?.cart?.length || 0} item(s)`}</span>
                     </div>
@@ -74,8 +78,8 @@ const Header = () => {
                                 Admin workspace
                             </Link>}
                             <span
-                                onClick={() => dispath(logout())}
-                                className="border-t border-gray-300 p-2 hover:text-main hover:bg-sky-50 w-full">
+                                onClick={() => dispatch(logout())}
+                                className="border-t p-2 border-gray-300  hover:text-main hover:bg-sky-50 w-full">
                                 Logout
                             </span>
                         </div>}
@@ -86,4 +90,4 @@ const Header = () => {
         </div>
     )
 }
-export default Header
+export default withBaseCompoment(memo(Header)) 

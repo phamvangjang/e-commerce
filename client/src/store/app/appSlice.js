@@ -7,7 +7,8 @@ export const appSlice = createSlice({
         categories: null,
         isLoading: false,
         isShowModel: false,
-        modelChildren: null
+        modelChildren: null,
+        isShowCart: false
     },
     reducers: {
         // logout: (state) => {
@@ -15,7 +16,10 @@ export const appSlice = createSlice({
         // }
         showModel: (state, action) => {
             state.isShowModel = action.payload.isShowModel
-                state.modelChildren = action.payload.modelChildren
+            state.modelChildren = action.payload.modelChildren
+        },
+        showCart: (state, action) => {
+            state.isShowCart = state.isShowCart === false ? true : false
         }
     },
     // Code logic xử lý async action
@@ -42,5 +46,5 @@ export const appSlice = createSlice({
         });
     },
 })
-export const {showModel } = appSlice.actions;
+export const { showModel, showCart } = appSlice.actions;
 export default appSlice.reducer

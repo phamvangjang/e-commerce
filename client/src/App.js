@@ -8,17 +8,24 @@ import { getCategories } from './store/app/asyncAction'
 import { useDispatch, useSelector } from 'react-redux'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Model } from './components';
+import { Cart, Model } from './components';
+import { showCart } from 'store/app/appSlice';
 
 function App() {
   const dispatch = useDispatch()
-  const { isShowModel, modelChildren } = useSelector(state => state.app)
+  const { isShowModel, modelChildren, isShowCart } = useSelector(state => state.app)
   useEffect(() => {
     dispatch(getCategories())
   }, [])
   return (
-    <div className="font-main h-screen">
+    <div className="font-main h-screen relative">
       {isShowModel && <Model>{modelChildren}</Model>}
+      {isShowCart &&
+        <div
+          onClick={() => dispatch(showCart())}
+          className='absolute inset-0 bg-overlay z-50 flex justify-end'>
+          <Cart />
+        </div>}
       <Routes>
         <Route path={path.PUBLIC} element={<Public />}>
           <Route path={path.HOME} element={<Home />} />
