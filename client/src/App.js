@@ -17,7 +17,7 @@ function App() {
     dispatch(getCategories())
   }, [])
   return (
-    <div className="font-main relative">
+    <div className="font-main h-screen">
       {isShowModel && <Model>{modelChildren}</Model>}
       <Routes>
         <Route path={path.PUBLIC} element={<Public />}>

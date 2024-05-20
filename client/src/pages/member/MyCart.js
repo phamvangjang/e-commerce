@@ -1,11 +1,14 @@
+import withBaseCompoment from 'hocs/withBaseCompoment'
 import React, { memo } from 'react'
 
-const MyCart = () => {
+const MyCart = (props) => {
     return (
-        <div>
+        <div 
+        className='cursor-pointer'
+        onClick={() => props.navigate('/')}>
             MyCart
         </div>
     )
 }
 
-export default memo(MyCart)
+export default withBaseCompoment(MyCart)
