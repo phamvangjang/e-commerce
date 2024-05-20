@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { useFetcher, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { apiGetProduct, apiGetProducts } from "../../apis";
 import { Breadcrumb, Button, SelectOption, SelectQuantity, ProductInformation, CustomSlider } from "../../components";
 import Slider from "react-slick";
@@ -9,7 +9,7 @@ import icons from "../../ultils/icons";
 import DOMPurify from "dompurify";
 import clsx from "clsx";
 
-const { FaShieldAlt, FaTruck, FaReply, FaPhoneAlt, FaGift } = icons
+const { FaShieldAlt, FaTruck, FaReply, FaPhoneAlt, FaGift} = icons
 const settings = {
     dots: false,
     infinite: false,

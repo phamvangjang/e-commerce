@@ -17,14 +17,14 @@ const Products = () => {
     const [products, setProducts] = useState(null)
     const [params] = useSearchParams()
     const [sort, setSort] = useState('')
+    const { category } = useParams()
 
     const fetchProductsByCategory = async (queries) => {
-        const response = await apiGetProducts(queries)
+        const response = await apiGetProducts({...queries, category})
         if (response.success) setProducts(response)
         // console.log(response)
     }
 
-    const { category } = useParams()
     useEffect(() => {
         // let param = []
         // for (let i of params.entries()) param.push(i)

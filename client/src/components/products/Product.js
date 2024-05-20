@@ -8,16 +8,42 @@ import icons from "../../ultils/icons";
 import withBaseCompoment from "hocs/withBaseCompoment";
 import { showModel } from "store/app/appSlice";
 import { DetailProduct } from "pages/public";
+import { apiUpdateCart } from "apis";
+import { toast } from "react-toastify";
+import { getCurrent } from "store/user/asyncActions";
+import { useSelector } from "react-redux";
+import Swal from "sweetalert2";
+import path from "ultils/path";
 // import path from "../ultils/path";
 
-const { FaEye, IoMdMenu, FaHeart } = icons
+const { FaEye, FaCartPlus, FaHeart, BsCartCheckFill } = icons
 
 const Product = ({ productData, isNew, normal, navigate, dispatch }) => {
+    const { current } = useSelector(state => state.user)
+
     const [isShowOption, setIsShowOption] = useState(false)
 
-    const handleClickOptions = (e, flag) => {
+    const handleClickOptions = async (e, flag) => {
         e.stopPropagation()
-        if (flag === 'MENU') navigate(`/${productData?.category?.toLowerCase()}/${productData?._id}/${productData?.title}`)
+        if (flag === 'CART') {
+            console.log(productData)
+            if (!current) return Swal.fire({
+                title: 'Almost...',
+                text: 'Please go to login page',
+                icon: 'info',
+                cancelButtonText: 'Not now',
+                showCancelButton: true,
+                confirmButtonText: 'Go login page'
+            }).then((rs) => {
+                if (rs.isConfirmed) navigate(`/${path.LOGIN}`)
+            })
+            const response = await apiUpdateCart({ pid: productData._id, color: productData.color })
+            if (response.success) {
+                toast.success(response.mes)
+                dispatch(getCurrent())
+            }
+            else toast.error(response.mes)
+        }
         if (flag === 'WISHLIST') console.log('WISHLIST')
         if (flag === 'QUICK_VIEW') {
             dispatch(showModel({
@@ -28,8 +54,8 @@ const Product = ({ productData, isNew, normal, navigate, dispatch }) => {
                         isQuickView />
             }))
         }
-
     }
+
     return (
         <div className='w-full text-base px-[10px]'>
             <div
@@ -48,16 +74,27 @@ const Product = ({ productData, isNew, normal, navigate, dispatch }) => {
                     {isShowOption &&
                         <div className='absolute bottom-[10px] left-0 right-0 flex justify-center gap-2 animate-slide-top'>
                             <span
+                                title="Quick View"
                                 onClick={(e) => handleClickOptions(e, 'QUICK_VIEW')}
                             >
                                 <SelectOption icon={<FaEye />} />
                             </span>
+                            
+                            {current?.cart?.some(el => el.product === productData._id)
+                                ? <span
+                                    title="Added to cart"
+                                    // onClick={(e) => handleClickOptions(e, 'CART')}
+                                >
+                                    <SelectOption icon={<BsCartCheckFill color="green" />} />
+                                </span>
+                                : <span
+                                    title="Add to cart"
+                                    onClick={(e) => handleClickOptions(e, 'CART')}
+                                >
+                                    <SelectOption icon={<FaCartPlus />} />
+                                </span>}
                             <span
-                                onClick={(e) => handleClickOptions(e, 'MENU')}
-                            >
-                                <SelectOption icon={<IoMdMenu />} />
-                            </span>
-                            <span
+                                title="Add your wish list"
                                 onClick={(e) => handleClickOptions(e, 'WISHLIST')}
                             >
                                 <SelectOption icon={<FaHeart />} />

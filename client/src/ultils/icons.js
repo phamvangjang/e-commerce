@@ -25,6 +25,8 @@ import { FaCaretDown } from "react-icons/fa";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import { FaEdit } from "react-icons/fa";
 import { BiSolidCustomize } from "react-icons/bi";
+import { FaCartPlus } from "react-icons/fa";
+import { BsCartCheckFill } from "react-icons/bs";
 
 const icons = {
     RiPhoneFill,
@@ -53,7 +55,9 @@ const icons = {
     FaCaretDown,
     RiDeleteBin6Fill,
     FaEdit,
-    BiSolidCustomize
+    BiSolidCustomize,
+    FaCartPlus, 
+    BsCartCheckFill
 }
 
 export default icons
