@@ -14,16 +14,16 @@ import path from 'ultils/path';
 
 const { RiDeleteBin6Fill } = icons
 const Cart = ({ dispatch, navigate }) => {
-    const { current } = useSelector(state => state.user)
-    const removeCart = async (pid) => {
-        const response = await apiRemoveCart(pid)
+    const { currentCart } = useSelector(state => state.user)
+    const removeCart = async (pid, color) => {
+        const response = await apiRemoveCart(pid, color)
         if (response.success) {
             toast.success(response.mes)
             dispatch(getCurrent())
         }
         else toast.error(response.mes)
     }
-    // console.log(current)
+    // console.log(current.cart)
     return (
         <div
             onClick={e => e.stopPropagation()}
@@ -38,29 +38,34 @@ const Cart = ({ dispatch, navigate }) => {
             </header>
 
             <section className='flex flex-col gap-3 row-span-7 h-full max-h-full overflow-y-auto py-3'>
-                {!current?.cart && <div className='text-sm italic'>Your cart is empty.</div>}
-                {current?.cart && current?.cart?.map(el => (
+                {!currentCart && <div className='text-sm italic'>Your cart is empty.</div>}
+                {currentCart && currentCart?.map(el => (
                     <div
                         key={el._id}
                         className='flex justify-between items-center'
                     >
                         <div className='flex gap-2'>
                             <img
-                                src={el?.product?.thumb}
+                                src={el?.thumbnail || el?.product?.thumb}
                                 alt='thumb'
                                 className='w-16 h-16 object-cover'
                             />
 
-                            <div className='flex flex-col gap-1'>
-                                <span className='font-sm'>{el?.product?.title}</span>
-                                <span className='text-[10px]'>{el?.color}</span>
+                            <div
+                                className='flex flex-col gap-1'>
+                                <span
+                                    className='font-sm'>{el?.title}</span>
+                                <span
+                                    className='text-[10px]'>{el?.color}</span>
+                                <span
+                                    className='text-[10px]'>{`Quantity: ${el?.quantity}`}</span>
                                 <span
                                     className='text-sm'>
-                                    {`${formatMoney(formatPrice(el?.product?.price))}`}</span>
+                                    {`${formatMoney(formatPrice(el?.price || el?.product?.price))} VND`}</span>
                             </div>
                         </div>
                         <span
-                            onClick={() => removeCart((el?.product?._id))}
+                            onClick={() => removeCart(el?.product?._id, el?.color)}
                             className='p-2 cursor-pointer hover:text-main'
                         ><RiDeleteBin6Fill size={24} /></span>
                     </div>
@@ -71,7 +76,7 @@ const Cart = ({ dispatch, navigate }) => {
                 <div
                     className='flex items-center my-4 justify-between pt-4 border-t'>
                     <span>Subtotal: </span>
-                    <span>{`${formatMoney(formatPrice(current?.cart?.reduce((sum, el) => sum + Number(el?.product?.price), 0)))} VND`}</span>
+                    <span>{`${formatMoney(formatPrice(currentCart?.reduce((sum, el) => sum + Number(el?.price) * el?.quantity, 0)))} VND`}</span>
                 </div>
 
                 <span

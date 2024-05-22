@@ -78,8 +78,16 @@ const DetailProduct = ({ isQuickView, data, location, dispatch, navigate }) => {
                 images: product?.varriants?.find(el => el.sku === varriants)?.images,
                 thumb: product?.varriants?.find(el => el.sku === varriants)?.thumb,
             })
+        }else{
+            setCurrentProduct({
+                title: product?.title,
+                color: product?.color,
+                price: product?.price,
+                images: product?.images || [],
+                thumb: product?.thumb,
+            })
         }
-    })
+    }, )
 
     useEffect(() => {
         if (pid) {
@@ -124,13 +132,20 @@ const DetailProduct = ({ isQuickView, data, location, dispatch, navigate }) => {
             cancelButtonText: 'Not now',
             showCancelButton: true,
             confirmButtonText: 'Go login page'
-        }).then(async(rs) => {
+        }).then(async (rs) => {
             if (rs.isConfirmed) navigate({
                 pathname: `/${path.LOGIN}`,
-                search: createSearchParams({redirect: location.pathname}).toString()
+                search: createSearchParams({ redirect: location.pathname }).toString()
             })
         })
-        const response = await apiUpdateCart({ pid, color: currentProduct.color, quantity })
+        const response = await apiUpdateCart({
+            pid,
+            color: currentProduct.color || product?.color,
+            quantity,
+            price: currentProduct.price || product.price,
+            thumbnail: currentProduct.thumb || product.thumb,
+            title: currentProduct.title || product.title,
+        })
         if (response.success) {
             toast.success(response.mes)
             dispatch(getCurrent())
@@ -244,6 +259,7 @@ const DetailProduct = ({ isQuickView, data, location, dispatch, navigate }) => {
                             </div>
                             {product?.varriants?.map(el => (
                                 <div
+                                    key={el.sku}
                                     onClick={() => setVarriants(el?.sku)}
                                     className={clsx("cursor-pointer flex items-center gap-2 p-2 border",
                                         varriants === el.sku
