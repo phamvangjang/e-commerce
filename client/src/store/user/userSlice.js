@@ -28,6 +28,9 @@ export const userSlice = createSlice({
 
         clearMessage: (state) => {
             state.mes = ''
+        },
+        updateCart: (state, action)=>{
+            
         }
     },
     // Code logic xử lý async action

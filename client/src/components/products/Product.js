@@ -26,7 +26,7 @@ const Product = ({ productData, isNew, normal, navigate, dispatch }) => {
     const handleClickOptions = async (e, flag) => {
         e.stopPropagation()
         if (flag === 'CART') {
-            console.log(productData)
+            // console.log(productData)
             if (!current) return Swal.fire({
                 title: 'Almost...',
                 text: 'Please go to login page',
