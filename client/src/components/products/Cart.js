@@ -27,7 +27,7 @@ const Cart = ({ dispatch, navigate }) => {
     return (
         <div
             onClick={e => e.stopPropagation()}
-            className='w-[400px] h-screen bg-gray-950 text-gray-50 p-6 grid grid-rows-10'>
+            className='w-[400px] h-screen bg-gray-900 text-gray-50 p-6 grid grid-rows-10'>
             <header className='border-b border-gray-400 flex justify-between items-center font-bold text-2xl row-span-1 h-full'>
                 <span>Your cart</span>
                 <span
@@ -37,7 +37,7 @@ const Cart = ({ dispatch, navigate }) => {
                 </span>
             </header>
 
-            <section className='flex flex-col gap-3 row-span-7 h-full max-h-full overflow-y-auto py-3'>
+            <section className='flex flex-col gap-3 row-span-7 h-full max-h-[full] overflow-y-auto py-3'>
                 {!currentCart && <div className='text-sm italic'>Your cart is empty.</div>}
                 {currentCart && currentCart?.map(el => (
                     <div
@@ -48,7 +48,7 @@ const Cart = ({ dispatch, navigate }) => {
                             <img
                                 src={el?.thumbnail || el?.product?.thumb}
                                 alt='thumb'
-                                className='w-16 h-16 object-cover'
+                                className='w-28 h-28 object-cover'
                             />
 
                             <div
@@ -86,7 +86,7 @@ const Cart = ({ dispatch, navigate }) => {
                     <Button
                         handleOnClick={() => {
                             dispatch(showCart())
-                            navigate(`${path.DETAIL_CART}`)
+                            navigate(`/${path.MEMBER}/${path.DETAIL_CART}`)
                         }}
                         style='rounded-none w-full py-3 bg-main'
                     >SHOPPING CART</Button>

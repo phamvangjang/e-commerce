@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { createSearchParams, useParams } from "react-router-dom";
 import { apiGetProduct, apiGetProducts, apiUpdateCart } from "../../apis";
 import { Breadcrumb, Button, SelectOption, SelectQuantity, ProductInformation, CustomSlider } from "../../components";
@@ -25,6 +25,7 @@ const settings = {
 };
 
 const DetailProduct = ({ isQuickView, data, location, dispatch, navigate }) => {
+    const titleRef = useRef()
     const { current } = useSelector(state => state.user)
     const [update, setUpdate] = useState(false)
     const [currentImage, setCurrenImage] = useState(null)
@@ -78,7 +79,7 @@ const DetailProduct = ({ isQuickView, data, location, dispatch, navigate }) => {
                 images: product?.varriants?.find(el => el.sku === varriants)?.images,
                 thumb: product?.varriants?.find(el => el.sku === varriants)?.thumb,
             })
-        }else{
+        } else {
             setCurrentProduct({
                 title: product?.title,
                 color: product?.color,
@@ -87,7 +88,7 @@ const DetailProduct = ({ isQuickView, data, location, dispatch, navigate }) => {
                 thumb: product?.thumb,
             })
         }
-    }, )
+    }, [varriants, product])
 
     useEffect(() => {
         if (pid) {
@@ -95,6 +96,7 @@ const DetailProduct = ({ isQuickView, data, location, dispatch, navigate }) => {
             fetchProducts()
         }
         window.scrollTo(0, 0)
+        titleRef.current.scrollIntoView({ block: 'start' })
     }, [pid])
 
     useEffect(() => {
@@ -123,7 +125,7 @@ const DetailProduct = ({ isQuickView, data, location, dispatch, navigate }) => {
         e.stopPropagation()
         setCurrenImage(el)
     }
-
+    
     const handleAddToCart = async () => {
         if (!current) return Swal.fire({
             title: 'Almost...',
@@ -157,7 +159,9 @@ const DetailProduct = ({ isQuickView, data, location, dispatch, navigate }) => {
         <div
             className="w-full ">
             {!isQuickView && <div className="h-[80px] flex justify-center items-center bg-gray-200">
-                <div className="w-main">
+                <div
+                    ref={titleRef}
+                    className="w-main">
                     <h3 className="font-bold uppercase">{currentProduct?.title || product?.title}</h3>
                     <Breadcrumb
                         title={currentProduct?.title || product?.title}

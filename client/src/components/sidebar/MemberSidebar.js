@@ -5,6 +5,9 @@ import { NavLink, Link } from 'react-router-dom'
 import clsx from 'clsx'
 import { FaCaretDown, FaCaretRight } from "react-icons/fa";
 import { useSelector } from 'react-redux'
+import icons from 'ultils/icons'
+
+const { FaHome } = icons
 
 const activedStyle = 'px-4 py-2 flex items-center text-gray-900 gap-2 bg-gray-300'
 const noActivedStyle = 'px-4 py-2 flex items-center text-gray-900 gap-2 hover:bg-gray-300'
@@ -57,16 +60,18 @@ const MemberSidebar = () => {
                                         onClick={e => e.stopPropagation()}
                                         key={item.text}
                                         to={item.path}
-                                        className={({ isActive }) => clsx(isActive && activedStyle, !isActive && noActivedStyle, 'pl-10')}
-                                    >
+                                        className={({ isActive }) => clsx(isActive && activedStyle, !isActive && noActivedStyle, 'pl-10')}>
                                         {item.text}
-
                                     </NavLink>
                                 ))}
                             </div>}
                         </div>}
                     </Fragment>
                 ))}
+                <NavLink to={`/`} className={clsx(noActivedStyle)}>
+                    <span><FaHome /></span>
+                    <span>GO HOME</span>
+                </NavLink>
             </div>
         </div>
     )

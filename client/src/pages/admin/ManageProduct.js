@@ -84,7 +84,7 @@ const ManageProduct = () => {
                 />
             </div>}
 
-            {customizeVarriant && <div className='absolute inset-0 min-h-screen bg-gray-100 z-50'>
+            {customizeVarriant && <div className='absolute inset-0 min-h-screen bg-gray-100 z-40'>
                 <CustomizeVarriants
                     customizeVarriant={customizeVarriant}
                     render={render}

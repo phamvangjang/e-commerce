@@ -57,7 +57,7 @@ const icons = {
     FaEdit,
     BiSolidCustomize,
     FaCartPlus, 
-    BsCartCheckFill
+    BsCartCheckFill,
 }
 
 export default icons

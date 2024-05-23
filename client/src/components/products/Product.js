@@ -14,11 +14,12 @@ import { getCurrent } from "store/user/asyncActions";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import path from "ultils/path";
+import { createSearchParams } from "react-router-dom";
 // import path from "../ultils/path";
 
 const { FaEye, FaCartPlus, FaHeart, BsCartCheckFill } = icons
 
-const Product = ({ productData, isNew, normal, navigate, dispatch }) => {
+const Product = ({ productData, isNew, normal, navigate, dispatch, location }) => {
     const { current } = useSelector(state => state.user)
 
     const [isShowOption, setIsShowOption] = useState(false)
@@ -27,6 +28,23 @@ const Product = ({ productData, isNew, normal, navigate, dispatch }) => {
         e.stopPropagation()
         if (flag === 'CART') {
             // console.log(productData)
+            // if (!current) return Swal.fire({
+            //     title: 'Almost...',
+            //     text: 'Please go to login page',
+            //     icon: 'info',
+            //     cancelButtonText: 'Not now',
+            //     showCancelButton: true,
+            //     confirmButtonText: 'Go login page'
+            // }).then((rs) => {
+            //     if (rs.isConfirmed) navigate(`/${path.LOGIN}`)
+            // })
+            // const response = await apiUpdateCart({ pid: productData._id, color: productData.color })
+            // if (response.success) {
+            //     toast.success(response.mes)
+            //     dispatch(getCurrent())
+            // }
+            // else toast.error(response.mes)
+
             if (!current) return Swal.fire({
                 title: 'Almost...',
                 text: 'Please go to login page',
@@ -34,18 +52,30 @@ const Product = ({ productData, isNew, normal, navigate, dispatch }) => {
                 cancelButtonText: 'Not now',
                 showCancelButton: true,
                 confirmButtonText: 'Go login page'
-            }).then((rs) => {
-                if (rs.isConfirmed) navigate(`/${path.LOGIN}`)
+            }).then(async (rs) => {
+                if (rs.isConfirmed) navigate({
+                    pathname: `/${path.LOGIN}`,
+                    search: createSearchParams({ redirect: location.pathname }).toString()
+                })
             })
-            const response = await apiUpdateCart({ pid: productData._id, color: productData.color })
+            const response = await apiUpdateCart({
+                pid: productData?._id,
+                color: productData?.color,
+                quantity: 1,
+                price: productData?.price,
+                thumbnail: productData?.thumb,
+                title: productData?.title,
+            })
             if (response.success) {
                 toast.success(response.mes)
                 dispatch(getCurrent())
             }
             else toast.error(response.mes)
+
         }
         if (flag === 'WISHLIST') console.log('WISHLIST')
         if (flag === 'QUICK_VIEW') {
+            // e.stopPropagation()
             dispatch(showModel({
                 isShowModel: true,
                 modelChildren:
@@ -79,11 +109,11 @@ const Product = ({ productData, isNew, normal, navigate, dispatch }) => {
                             >
                                 <SelectOption icon={<FaEye />} />
                             </span>
-                            
+
                             {current?.cart?.some(el => el.product === productData._id)
                                 ? <span
                                     title="Added to cart"
-                                    // onClick={(e) => handleClickOptions(e, 'CART')}
+                                // onClick={(e) => handleClickOptions(e, 'CART')}
                                 >
                                     <SelectOption icon={<BsCartCheckFill color="green" />} />
                                 </span>
