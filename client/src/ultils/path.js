@@ -4,7 +4,7 @@ const path = {
     ALL: '*',
     LOGIN: 'login',
     // PRODUCTS: 'products',
-    PRODUCTS: ':category',
+    PRODUCTS_CATEGORY: ':category',
     BLOGS: 'blogs',
     OUR_SERVICE: 'services',
     FAQ: 'faqs',
@@ -14,6 +14,7 @@ const path = {
     RESET_PASSWORD: 'reset-password/:token',
     DETAIL_CART: 'my-cart',
     CHECKOUT: 'checkout',
+    PRODUCTS: 'products',
 
     //admin
     ADMIN: 'admin',

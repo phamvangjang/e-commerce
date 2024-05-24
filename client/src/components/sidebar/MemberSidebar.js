@@ -19,7 +19,7 @@ const MemberSidebar = () => {
         if (active.some(el => el === tabID)) setActive(prev => prev.filter(el => el !== tabID))
         else setActive(prev => [...prev, tabID])
     }
-    console.log(current)
+    // console.log(current)
     return (
         <div className='py-4 bg-zinc-50 h-full w-[330px] flex-none'>
             <div
@@ -68,10 +68,6 @@ const MemberSidebar = () => {
                         </div>}
                     </Fragment>
                 ))}
-                <NavLink to={`/`} className={clsx(noActivedStyle)}>
-                    <span><FaHome /></span>
-                    <span>GO HOME</span>
-                </NavLink>
             </div>
         </div>
     )

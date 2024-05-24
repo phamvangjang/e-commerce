@@ -155,7 +155,7 @@ export const voteOptions = [
     },
 ]
 
-const { MdDashboard, MdGroups, AiFillProduct, RiBillLine } = icons
+const { MdDashboard, MdGroups, AiFillProduct, RiBillLine, FaHome } = icons
 export const adminSidebar = [
     {
         id: 1,
@@ -224,6 +224,13 @@ export const memberSidebar = [
         text: 'Wish list',
         path: `/${path.MEMBER}/${path.WISHLIST}`,
         icons: <RiBillLine size={24} />
+    },
+    {
+        id: 5,
+        type: 'SINGLE',
+        text: 'Go Home',
+        path: `/`,
+        icons: <FaHome size={24} />
     },
 ]
 

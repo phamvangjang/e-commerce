@@ -2,13 +2,32 @@ import { Breadcrumb, Button, OrderItem } from 'components'
 import withBaseCompoment from 'hocs/withBaseCompoment'
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, createSearchParams } from 'react-router-dom'
+import Swal from 'sweetalert2'
 import { formatMoney } from 'ultils/helpers'
 import path from 'ultils/path'
 
-const DetailCart = ({ location }) => {
-    const { currentCart } = useSelector(state => state.user)
-    console.log(currentCart)
+const DetailCart = ({ location, navigate }) => {
+    const { currentCart, current } = useSelector(state => state.user)
+
+    const handleSubmit = () => {
+        if (!current?.address) return Swal.fire({
+            icon: 'info',
+            title: 'Almost!',
+            text: 'Please update your address before checkout',
+            showCancelButton: true,
+            showConfirmButton: true,
+            confirmButtonText: 'Go update',
+            cancelButtonText: 'Cancle',
+        }).then((result) => {
+            if (result.isConfirmed) navigate({
+                pathname: `/${path.MEMBER}/${path.PERSONAL}`,
+                search: createSearchParams({ redirect: location.pathname }).toString()
+            })
+        })
+        else window.open(`/${path.CHECKOUT}`, '_blank')
+    }
+    // console.log(currentCart)
     return (
         <div className='w-full'>
             <div className="h-[80px] flex justify-center items-center bg-gray-200">
@@ -48,10 +67,11 @@ const DetailCart = ({ location }) => {
                     <span className='text-main font-bold'>{`${formatMoney(currentCart?.reduce((sum, el) => +el?.price * el?.quantity + sum, 0))} VND`}</span>
                 </span>
                 <span className='text-xs italic'>Shipping, taxes, and discounts calculated at checkout.</span>
-                <Button>
-                    <Link 
+                <Button
+                    handleOnClick={handleSubmit}>Checkout
+                    {/* <Link 
                     target='_blank'
-                    to={`/${path.CHECKOUT}`}>Checkout</Link>
+                    to={`/${path.CHECKOUT}`}>Checkout</Link> */}
                 </Button>
             </div>
             <div className='h-[500px]'>
