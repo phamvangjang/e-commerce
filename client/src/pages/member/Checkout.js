@@ -1,16 +1,27 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import payment from '../../assets/payment.svg'
 import { useSelector } from 'react-redux'
 import { formatMoney, formatPrice } from 'ultils/helpers'
-import { InputForm, Paypal } from 'components'
+import { Congratulations, InputForm, Paypal } from 'components'
 import { useForm } from 'react-hook-form'
+import withBaseCompoment from 'hocs/withBaseCompoment'
+import { getCurrent } from 'store/user/asyncActions'
 
-const Checkout = () => {
-    const { currentCart } = useSelector(state => state.user)
-    const { register, formState: { errors }, reset, handleSubmit, watch } = useForm()
-    // console.log(currentCart)
+const Checkout = ({ dispatch, navigate }) => {
+    const { currentCart, current } = useSelector(state => state.user)
+    const { register, formState: { errors }, watch, setValue } = useForm()
+    const address = watch('address')
+    const [isSuccess, setIsSuccess] = useState(false)
+    useEffect(() => {
+        setValue('address', current?.address)
+    }, [current.address])
+
+    useEffect(() => {
+        if (isSuccess) dispatch(getCurrent())
+    }, [isSuccess])
     return (
         <div className='w-full p-8 grid grid-cols-10 gap-6 h-full max-h-screen overflow-y-auto'>
+            {isSuccess && <Congratulations />}
             <div className='w-full flex items-center col-span-4'>
                 <img
                     src={payment}
@@ -59,9 +70,16 @@ const Checkout = () => {
                             />
                         </div>
 
-                        <div className='w-full'>
-                            <Paypal amount={Math.round(currentCart?.reduce((sum, el) => +el?.price * el?.quantity + sum, 0)/24000)} />
-                        </div>
+                        {<div className='w-full'>
+                            <Paypal
+                                payload={{
+                                    products: currentCart,
+                                    total: Math.round(currentCart?.reduce((sum, el) => +el?.price * el?.quantity + sum, 0) / 24000),
+                                    address
+                                }}
+                                setIsSuccess={setIsSuccess}
+                                amount={Math.round(currentCart?.reduce((sum, el) => +el?.price * el?.quantity + sum, 0) / 24000)} />
+                        </div>}
                     </div>
                 </div>
             </div>
@@ -69,4 +87,4 @@ const Checkout = () => {
     )
 }
 
-export default Checkout
+export default withBaseCompoment(Checkout)
