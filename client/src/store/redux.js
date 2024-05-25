@@ -4,8 +4,8 @@ import productSlice from './products/productSlice';
 import storage from 'redux-persist/lib/storage';
 import userSlice from './user/userSlice';
 import {
-  persistReducer, 
-  persistStore, 
+  persistReducer,
+  persistStore,
   FLUSH,
   REHYDRATE,
   PAUSE,
@@ -15,19 +15,25 @@ import {
 } from 'redux-persist'
 
 const commonConfig = {
-  key: 'shop/user',
   storage
 }
 
 const userConfig = {
   ...commonConfig,
-  whitelist: ['isLoggedIn', 'token', 'current', 'currentCart']
+  whitelist: ['isLoggedIn', 'token', 'current', 'currentCart'],
+  key: 'shop/user'
+}
+
+const productConfig = {
+  ...commonConfig,
+  whitelist: ['dealDaily'],
+  key: 'shop/deal'
 }
 
 export const store = configureStore({
   reducer: {
     app: appSlice,
-    products: productSlice,
+    products: persistReducer(productConfig, productSlice),
     user: persistReducer(userConfig, userSlice)
   },
 

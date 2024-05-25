@@ -45,3 +45,15 @@ export const apiCreateOrder = (data) => axois({
     method: 'post',
     data
 })
+
+export const apiGetOrders = (params) => axois({
+    url: '/order/admin',
+    method: 'get',
+    params
+})
+
+export const apiGetUserOrders = (params) => axois({
+    url: '/order/',
+    method: 'get',
+    params
+})

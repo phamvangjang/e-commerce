@@ -13,18 +13,17 @@ const FeatureProducts = () => {
     useEffect(() => {
         fetchProducts()
     }, [])
-    return (
 
+    return (
         <div className="w-full" >
             <h3 className="text-[20px] font-semibold py-[15px] border-b-2 border-main uppercase">Feature Products</h3>
             <div className='flex flex-wrap mt-[15px] mx-[-10px]'>
                 {products?.map(el => (
                     <ProductCart
-                        key={el._id}
                         image={el.thumb}
-                        title={el.title}
-                        totalRatings={el.totalRatings}
-                        price={el.price}
+                        key={el._id}
+                        pid={el._id}
+                        {...el}
                     />
                 ))}
             </div>

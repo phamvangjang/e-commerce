@@ -1,7 +1,19 @@
 import React, { memo } from 'react'
 import clsx from 'clsx'
+import { useForm } from 'react-hook-form'
 
-const Select = ({ label, options = [], register, errors, id, validate, style, fullWidth, defaultValue }) => {
+
+const Select = ({
+    label,
+    options = [],
+    // register,
+    // errors,
+    id,
+    validate,
+    style,
+    fullWidth,
+    defaultValue }) => {
+    const { register, formState : { errors } } = useForm()
     return (
         <div className={clsx('flex flex-col gap-2', style)}>
             {label && <label htmlFor={id} >{label}</label>}
@@ -16,17 +28,18 @@ const Select = ({ label, options = [], register, errors, id, validate, style, fu
                 >CHOOSE</option>
                 {options?.map(el => (
                     <option
-                        className='border-none p-2 '
-                        value={el.code}
-                    >
+                        className='border-none p-2'
+                        value={el.code}>
                         {el.value}
                     </option>
                 ))}
             </select>
-            {errors[id] && <small
-                className='text-xs text-main'
-            >{errors[id]?.message}</small>}
-        </div>
+            {
+                errors[id] && <small
+                    className='text-xs text-main'
+                >{errors[id]?.message}</small>
+            }
+        </div >
     )
 }
 

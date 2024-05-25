@@ -1,9 +1,13 @@
-import React from "react";
+import React, { memo } from "react";
 import { renderStarFromNumber, formatMoney } from '../../ultils/helpers'
+import withBaseCompoment from "hocs/withBaseCompoment";
 
-const ProductCart = ({ image, title, totalRatings, price }) => {
+const ProductCart = ({ image, title, totalRatings, price, pid, navigate, category }) => {
     return (
-        <div className="w-1/3 flex-auto px-[10px] mb-[20px]">
+        <div
+            onClick={(e) =>
+                navigate(`/${category?.toLowerCase()}/${pid}/${title}`)}
+            className="w-1/3 flex-auto px-[10px] mb-[20px] cursor-pointer">
             <div className='flex w-full border'>
                 <img
                     src={image}
@@ -23,4 +27,4 @@ const ProductCart = ({ image, title, totalRatings, price }) => {
 
     )
 }
-export default ProductCart
+export default withBaseCompoment(memo(ProductCart))

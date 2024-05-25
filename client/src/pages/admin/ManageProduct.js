@@ -26,10 +26,14 @@ const ManageProduct = () => {
     })
     const { register, formState: { errors }, handleSubmit, reset, watch } = useForm()
     const handleSearchProduct = (data) => {
-        console.log(data)
+        // console.log(data)/
     }
+    
     const fetchProducts = async (params) => {
-        const response = await apiGetProducts({ ...params, limit: process.env.REACT_APP_LIMIT })
+        const response = await apiGetProducts({
+            ...params,
+            limit: process.env.REACT_APP_LIMIT
+        })
         if (response.success) {
             setCounts(response.counts)
             setProducts(response.products)
@@ -178,7 +182,6 @@ const ManageProduct = () => {
             <div className='w-full justify-end my-8 flex px-4'>
                 <Pagination
                     totalCount={counts}
-
                 />
             </div>
         </div>

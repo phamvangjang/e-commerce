@@ -19,7 +19,7 @@ const PagiItem = ({ children }) => {
             // pathname: `/${category}`,
             search: createSearchParams(queries).toString()
         })
-        console.log(queries)
+        // console.log(queries)
     }
     return (
         <button

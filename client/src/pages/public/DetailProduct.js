@@ -125,7 +125,7 @@ const DetailProduct = ({ isQuickView, data, location, dispatch, navigate }) => {
         e.stopPropagation()
         setCurrenImage(el)
     }
-    
+
     const handleAddToCart = async () => {
         if (!current) return Swal.fire({
             title: 'Almost...',
@@ -157,10 +157,10 @@ const DetailProduct = ({ isQuickView, data, location, dispatch, navigate }) => {
     // console.log(product)
     return (
         <div
-            className="w-full ">
+            ref={titleRef}
+            className={clsx("w-full ")}>
             {!isQuickView && <div className="h-[80px] flex justify-center items-center bg-gray-200">
                 <div
-                    ref={titleRef}
                     className="w-main">
                     <h3 className="font-bold uppercase">{currentProduct?.title || product?.title}</h3>
                     <Breadcrumb

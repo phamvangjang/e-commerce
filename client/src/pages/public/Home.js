@@ -1,12 +1,21 @@
 import React from "react";
-import { Banner, Sidebar, BestSeller, DeadDaily, FeatureProducts, CustomSlider } from '../../components'
+import {
+    Banner,
+    Sidebar,
+    BestSeller,
+    DeadDaily,
+    FeatureProducts,
+    CustomSlider
+} from '../../components'
 import { useSelector } from "react-redux";
 import icons from "../../ultils/icons";
+import withBaseCompoment from "hocs/withBaseCompoment";
+import { createSearchParams } from "react-router-dom";
 
 const { MdArrowForwardIos } = icons
-const Home = () => {
-    const { newProducts } = useSelector(state => state.products)
-    const { categories } = useSelector(state => state.app)
+const Home = ({ navigate }) => {
+    const { newProducts } = useSelector((state) => state.products)
+    const { categories } = useSelector((state) => state.app)
     const { isLoggedIn, current } = useSelector(state => state.user)
 
     // console.log({ isLoggedIn, current })
@@ -37,7 +46,7 @@ const Home = () => {
             <div className="my-8 w-main">
                 <h3 className="text-[20px] font-semibold py-[15px] border-b-2 border-main uppercase">hot collections</h3>
                 <div className="flex flex-wrap gap-4 mt-4 ">
-                    {categories?.filter(el => el.brand.length > 0).map(el => (
+                    {categories?.filter(el => el.brand.length > 0).map((el) => (
                         <div
                             key={el.id}
                             className="w-[396px]"
@@ -50,9 +59,16 @@ const Home = () => {
                                 />
                                 <div className="flex-1 text-gray-700">
                                     <h4 className="font-semibold uppercase">{el.title}</h4>
-                                    <ul className="text-sm">
-                                        {el?.brand?.map(item => (
-                                            <span key={item} className="flex gap-1 items-center text-gray-500">
+                                    <ul
+                                        className="text-sm">
+                                        {el?.brand?.map((item) => (
+                                            <span
+                                                onClick={() => navigate({
+                                                    pathname: `/${el.title}`,
+                                                    search: createSearchParams({ brand: item }).toString(),
+                                                })}
+                                                key={item}
+                                                className="cursor-pointer hover:underline hover:text-main flex gap-1 items-center text-gray-500">
                                                 <MdArrowForwardIos size={14} />
                                                 <li >{item}</li>
                                             </span>
@@ -71,4 +87,4 @@ const Home = () => {
 
     )
 }
-export default Home
+export default withBaseCompoment(Home)

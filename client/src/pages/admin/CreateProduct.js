@@ -57,7 +57,7 @@ const CreateProduct = () => {
     useEffect(() => {
         handlePreviewImages(watch('images'))
     }, [watch('images')])
-    console.log(preview)
+    // console.log(preview)
 
     const handleCreateProduct = async (data) => {
         const invalids = validate(payload, setInvalidFields)

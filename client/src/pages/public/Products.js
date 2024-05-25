@@ -43,13 +43,11 @@ const Products = () => {
             if (queries.to) queries.price = { lte: queries.to }
         }
 
-
         delete queries.from
         delete queries.to
         const q = { ...priceQuery, ...queries }
         // console.log(q)
         fetchProductsByCategory(q)
-
         window.scrollTo(0, 0)
     }, [params])
 
@@ -114,7 +112,7 @@ const Products = () => {
                     {products?.products?.map(el => (
                         <Product
                             key={el._id}
-                            pid={el.id}
+                            pid={el._id}
                             productData={el}
                             normal={true}
                         />
