@@ -9,6 +9,10 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import Swal from 'sweetalert2'
 import clsx from 'clsx'
+import icons from 'ultils/icons'
+import { FaBackspace } from "react-icons/fa";
+
+const { RiDeleteBin6Fill, FaEdit } = icons
 
 const ManageUser = () => {
     const { handleSubmit, register, formState: { errors }, reset } = useForm({
@@ -27,7 +31,7 @@ const ManageUser = () => {
     const [users, setUsers] = useState(null)
     const [editElm, setEditElm] = useState(null)
     const [update, setUpdate] = useState(false)
-    
+
     const fetchUsers = async (params) => {
         const response = await apiGetUsers({ ...params, limit: process.env.REACT_APP_LIMIT })
         if (response.success) setUsers(response)
@@ -73,15 +77,15 @@ const ManageUser = () => {
 
     }
 
-    useEffect(()=>{
-        if(editElm) reset({
+    useEffect(() => {
+        if (editElm) reset({
             role: editElm.role,
             status: editElm.isBlocked
         })
-    },[editElm])    
+    }, [editElm])
 
     return (
-        <div className={clsx('w-full' , editElm && 'pl-16')}>
+        <div className={clsx('w-full', editElm && 'pl-16')}>
             <h1 className='h-[80px] flex justify-between items-center text-3xl font-bold px-4 border-b border-gray-900 '>
                 <span>Manage User</span>
             </h1>
@@ -106,22 +110,22 @@ const ManageUser = () => {
                     <table className='table-auto mb-6 text-left w-full'>
                         <thead className='font-bold bg-gray-400 text-[13px] border border-gray-900 text-center'>
                             <tr className=''>
-                                <th className='px-4 py-2'>#</th>
-                                <th className='px-4 py-2'>Email</th>
-                                <th className='px-4 py-2'>First name</th>
-                                <th className='px-4 py-2'>Last name</th>
-                                <th className='px-4 py-2'>role</th>
-                                <th className='px-4 py-2'>phone</th>
-                                <th className='px-4 py-2'>status</th>
-                                <th className='px-4 py-2'>CreateAt</th>
-                                <th className='px-4 py-2'>Action</th>
+                                <th className='border border-gray-500 py-2'>#</th>
+                                <th className='border border-gray-500 py-2'>Email</th>
+                                <th className='border border-gray-500 py-2'>First name</th>
+                                <th className='border border-gray-500 py-2'>Last name</th>
+                                <th className='border border-gray-500 py-2'>Role</th>
+                                <th className='border border-gray-500 py-2'>Phone</th>
+                                <th className='border border-gray-500 py-2'>Status</th>
+                                <th className='border border-gray-500 py-2'>CreateAt</th>
+                                <th className='border border-gray-500 py-2'>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             {users?.users?.map((el, idx) => (
-                                <tr key={el._id} className='border border-gray-900'>
-                                    <td className='py-2 px-4'>{idx + 1}</td>
-                                    <td className='py-2 px-4'>
+                                <tr key={el._id} className='border border-gray-900 text-center'>
+                                    <td className='py-2 border border-gray-500'>{idx + 1}</td>
+                                    <td className='py-2 border border-gray-500'>
                                         {editElm?._id === el._id
                                             ? <InputForm
                                                 register={register}
@@ -138,7 +142,7 @@ const ManageUser = () => {
                                                 }}
                                             />
                                             : <span>{el.email}</span>}</td>
-                                    <td className='py-2 px-4'>
+                                    <td className='py-2 border border-gray-500'>
                                         {editElm?._id === el._id
                                             ? <InputForm
                                                 register={register}
@@ -149,7 +153,7 @@ const ManageUser = () => {
                                                 validate={{ require: 'Require fill data' }}
                                             />
                                             : <span>{el.firstname}</span>}</td>
-                                    <td className='py-2 px-4'>
+                                    <td className='py-2 border border-gray-500'>
                                         {editElm?._id === el._id
                                             ? <InputForm
                                                 register={register}
@@ -160,7 +164,7 @@ const ManageUser = () => {
                                                 validate={{ require: 'Require fill data' }}
                                             />
                                             : <span>{el.lastname}</span>}</td>
-                                    <td className='py-2 px-4'>
+                                    <td className='py-2 border border-gray-500'>
                                         {editElm?._id === el._id
                                             ? <Select
                                                 register={register}
@@ -172,7 +176,7 @@ const ManageUser = () => {
                                                 options={roles}
                                             />
                                             : <span>{roles.find(role => +role.code === +el.role)?.value}</span>}</td>
-                                    <td className='py-2 px-4'>
+                                    <td className='py-2 border border-gray-500'>
                                         {editElm?._id === el._id
                                             ? <InputForm
                                                 register={register}
@@ -186,7 +190,7 @@ const ManageUser = () => {
                                                 }}
                                             />
                                             : <span>{el.mobile}</span>}</td>
-                                    <td className='py-2 px-4'>
+                                    <td className='py-2 border border-gray-500'>
                                         {editElm?._id === el._id
                                             ? <Select
                                                 register={register}
@@ -198,18 +202,20 @@ const ManageUser = () => {
                                                 options={blockStatus}
                                             />
                                             : <span>{el.isBlocked ? 'Blocked' : 'Active'}</span>}</td>
-                                    <td className='py-2 px-4'>{moment(el.createdAt).format('DD/MM/YYYY')}</td>
-                                    <td className='py-2 px-4'>
-                                        {editElm?._id ?
+                                    <td className='py-2 border border-gray-500'>{moment(el.createdAt).format('DD/MM/YYYY')}</td>
+                                    <td className='py-2 border border-gray-500'>
+                                        <div className='flex gap-1 items-center justify-center'>
+                                            {editElm?._id ?
+                                                <span
+                                                    onClick={() => setEditElm(null)}
+                                                    className='text-orange-400 text-[20px]  hover:text-orange-700 cursor-pointer'><FaBackspace/></span>
+                                                : <span
+                                                    onClick={() => setEditElm(el)}
+                                                    className='text-orange-400 text-[20px]  hover:text-orange-700 cursor-pointer'><FaEdit /></span>}
                                             <span
-                                                onClick={() => setEditElm(null)}
-                                                className='px-2 text-orange-500 hover:underline cursor-pointer'>Back</span>
-                                            : <span
-                                                onClick={() => setEditElm(el)}
-                                                className='px-2 text-orange-500 hover:underline cursor-pointer'>edit</span>}
-                                        <span
-                                            onClick={() => handleDeleteUser(el._id)}
-                                            className='px-2 text-orange-500 hover:underline cursor-pointer'>delete</span>
+                                                onClick={() => handleDeleteUser(el._id)}
+                                                className='text-orange-400 text-[20px]  hover:text-orange-700 cursor-pointer'><RiDeleteBin6Fill /></span>
+                                        </div>
                                     </td>
                                 </tr>
                             ))}

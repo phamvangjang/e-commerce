@@ -5,7 +5,7 @@ import { NavLink, Link } from 'react-router-dom'
 import clsx from 'clsx'
 import { FaCaretDown, FaCaretRight } from "react-icons/fa";
 
-const activedStyle = 'px-4 py-2 flex items-center text-gray-900 gap-2 bg-gray-500'
+const activedStyle = 'px-4 py-2 flex items-center text-gray-900 gap-2 bg-gray-300'
 const noActivedStyle = 'px-4 py-2 flex items-center text-gray-900 gap-2 hover:bg-gray-300'
 
 const AdminSidebar = () => {
@@ -15,7 +15,7 @@ const AdminSidebar = () => {
         else setActive(prev => [...prev, tabID])
     }
     return (
-        <div className='py-4 bg-zinc-200 h-full'>
+        <div className='py-4 bg-zinc-50 h-full'>
             <Link 
             to={'/'}
             className='flex flex-col justify-center items-center py-4 gap-2'>

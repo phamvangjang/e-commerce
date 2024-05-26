@@ -15,6 +15,7 @@ const path = {
     DETAIL_CART: 'my-cart',
     CHECKOUT: 'checkout',
     PRODUCTS: 'products',
+    ABOUT_US: 'about-us',
 
     //admin
     ADMIN: 'admin',

@@ -1,32 +1,53 @@
-import { RiPhoneFill } from 'react-icons/ri'
-import { MdEmail } from "react-icons/md";
-import { FaShoppingCart } from "react-icons/fa";
 import { FaCircleUser } from "react-icons/fa6";
-import { FaHome } from "react-icons/fa";
-import { FaStar } from "react-icons/fa";
-import { FaRegStar } from "react-icons/fa";
-import { FaEye } from "react-icons/fa";
 import { IoMdMenu } from "react-icons/io";
-import { FaHeart } from "react-icons/fa";
-import { MdArrowForwardIos } from "react-icons/md";
-import { FaPhoneAlt } from "react-icons/fa";
-import { FaLocationDot } from "react-icons/fa6";
+import { 
+    FaLocationDot,
+    FaHeadphonesSimple 
+ } from "react-icons/fa6";
 import { LuLogOut } from "react-icons/lu";
-import { FaReply } from "react-icons/fa";
-import { FaGift } from "react-icons/fa";
-import { FaTruck } from "react-icons/fa";
-import { FaShieldAlt } from "react-icons/fa";
-import { FaAngleDown } from "react-icons/fa";
-import { MdDashboard } from "react-icons/md";
-import { MdGroups } from "react-icons/md";
+import {
+    MdDashboard,
+    MdGroups,
+    MdArrowForwardIos,
+    MdEmail,
+    MdOutlineLaptopMac 
+} from "react-icons/md";
 import { AiFillProduct } from "react-icons/ai";
-import { RiBillLine } from "react-icons/ri";
-import { FaCaretDown } from "react-icons/fa";
-import { RiDeleteBin6Fill } from "react-icons/ri";
-import { FaEdit } from "react-icons/fa";
+import {
+    RiDeleteBin6Fill,
+    RiBillLine,
+    RiPhoneFill
+} from "react-icons/ri";
+import {
+    FaEdit,
+    FaShoppingCart,
+    FaHeart,
+    FaHome,
+    FaStar,
+    FaRegStar,
+    FaEye,
+    FaPhoneAlt,
+    FaCartPlus,
+    FaCaretDown,
+    FaAngleDown,
+    FaReply,
+    FaGift,
+    FaTruck,
+    FaShieldAlt
+} from "react-icons/fa";
 import { BiSolidCustomize } from "react-icons/bi";
-import { FaCartPlus } from "react-icons/fa";
-import { BsCartCheckFill } from "react-icons/bs";
+import { 
+    BsCartCheckFill,
+    BsSpeaker 
+ } from "react-icons/bs";
+import { 
+    SlScreenSmartphone, 
+    SlScreenTablet,
+    SlCamera,
+    SlPrinter ,
+
+} from "react-icons/sl";
+import { PiTelevisionLight } from "react-icons/pi";
 
 const icons = {
     RiPhoneFill,
@@ -56,8 +77,17 @@ const icons = {
     RiDeleteBin6Fill,
     FaEdit,
     BiSolidCustomize,
-    FaCartPlus, 
+    FaCartPlus,
     BsCartCheckFill,
+
+    PiTelevisionLight,
+    SlPrinter,
+    SlCamera,
+    SlScreenTablet,
+    SlScreenSmartphone,
+    BsSpeaker ,
+    MdOutlineLaptopMac,
+    FaHeadphonesSimple
 }
 
 export default icons

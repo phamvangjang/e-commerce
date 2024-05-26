@@ -52,8 +52,6 @@ const Login = () => {
         resetPayload()
     }, [isRegister])
 
-    //submit
-    // console.log(validate(payload))
     const handleSubmit = useCallback(async () => {
         const { firstname, lastname, mobile, ...data } = payload
         const invalids = isRegister ? validate(payload, setInvalidFields) : validate(data, setInvalidFields)
@@ -79,8 +77,6 @@ const Login = () => {
                 } else Swal.fire('Failed', rs.mes, 'error')
             }
         }
-
-
     }, [payload, isRegister])
 
     const finalRegister = async () => {
@@ -117,6 +113,7 @@ const Login = () => {
                 </div>
 
             </div>}
+
             {isForgotPassword && <div className="animate-slide-tr absolute top-0 left-0 bottom-0 right-0 bg-overlay flex flex-col py-20 z-50 items-center">
                 <div className="bg-gray-300 p-6 rounded-md">
                     <div className="flex flex-col gap-4">
@@ -136,23 +133,25 @@ const Login = () => {
                                 name='Submit'
                                 handleOnClick={handleForgotPassword}
                                 style='px-4 py-2 rounded-md text-white bg-blue-500 text-semibold my-2'
-                            />
+                            >Submit</Button>
 
                             <Button
                                 name='Cancle'
                                 handleOnClick={() => setIsForgotPassword(false)}
 
-                            />
+                            >Cancle</Button>
                         </div>
                     </div>
                 </div>
             </div>}
+
             <img
                 src="https://i.pinimg.com/originals/f5/43/d7/f543d74332fae1e0fe2cd64f9c0ea2fb.jpg"
                 alt=""
                 className="w-full h-full object-cover"
             />
-            <div className="absolute top-0 bottom-0 left-0 right-1/2 items-center justify-center flex">
+
+            <div className="absolute top-0 bottom-0 left-0 right-1 items-center justify-center flex">
                 <div className="flex flex-col items-center p-8 bg-white rounded-md min-w-[500px]">
                     <h1 className="text-[28px] font-semibold text-main mb-8">{isRegister ? 'Regster' : 'Login'}</h1>
                     {isRegister && <div className="flex items-start gap-2">
@@ -179,6 +178,7 @@ const Login = () => {
                         nameKey='email'
                         invalidFields={invalidFields}
                         setInvalidFields={setInvalidFields}
+                        fullWidth
                     />
 
                     {isRegister && <InputField
@@ -187,6 +187,7 @@ const Login = () => {
                         nameKey='mobile'
                         invalidFields={invalidFields}
                         setInvalidFields={setInvalidFields}
+                        fullWidth
                     />}
 
                     <InputField
@@ -196,6 +197,7 @@ const Login = () => {
                         type='password'
                         invalidFields={invalidFields}
                         setInvalidFields={setInvalidFields}
+                        fullWidth
                     />
 
                     <Button

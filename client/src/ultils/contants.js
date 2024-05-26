@@ -14,8 +14,8 @@ export const navigation = [
     },
     {
         id: 3,
-        value: 'BLOGS',
-        path: `/${path.BLOGS}`
+        value: 'ABOUT US',
+        path: `/${path.ABOUT_US}`
     },
     {
         id: 4,
@@ -26,7 +26,12 @@ export const navigation = [
         id: 5,
         value: 'FAQs',
         path: `/${path.FAQ}`
-    }
+    },
+    {
+        id: 6,
+        value: 'BLOGS',
+        path: `/${path.BLOGS}`
+    },
 ]
 
 export const productInforTabs = [
@@ -162,7 +167,7 @@ export const adminSidebar = [
         type: 'SINGLE',
         text: 'Dashboard',
         path: `/${path.ADMIN}/${path.DASHBOARD}`,
-        icons: <MdDashboard size={24}/>
+        icons: <MdDashboard size={24} />
     },
     {
         id: 2,
@@ -202,7 +207,7 @@ export const memberSidebar = [
         type: 'SINGLE',
         text: 'Personal',
         path: `/${path.MEMBER}/${path.PERSONAL}`,
-        icons: <MdDashboard size={24}/>
+        icons: <MdDashboard size={24} />
     },
     {
         id: 2,
@@ -256,7 +261,7 @@ export const blockStatus = [
     },
 ]
 
-export const statusOrder=[
+export const statusOrder = [
     {
         label: 'Cancelled',
         value: 'Cancelled'
@@ -264,5 +269,41 @@ export const statusOrder=[
     {
         label: 'Successed',
         value: 'Successed'
+    },
+]
+
+export const aboutUs = [
+    {
+        id: 1,
+        text: 'Who you are?'
+    },
+    {
+        id: 2,
+        text: 'Where you are located'
+    },
+    {
+        id: 3,
+        text: 'Where you are located'
+    },
+    {
+        id: 4,
+        text: 'How long you have been in business'
+    },
+    {
+        id: 5,
+        text: 'How long you have been running your online shop'
+    },
+    ,
+    {
+        id: 6,
+        text: 'Who are the people on your team'
+    },
+    {
+        id: 7,
+        text: 'Contact information'
+    },
+    {
+        id: 8,
+        text: 'Social links (Twitter, Facebook)'
     },
 ]

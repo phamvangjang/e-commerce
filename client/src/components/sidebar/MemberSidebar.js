@@ -1,13 +1,10 @@
 import React, { memo, Fragment, useState } from 'react'
 import avatar from '../../assets/avatar-default.png'
 import { memberSidebar } from 'ultils/contants'
-import { NavLink, Link } from 'react-router-dom'
+import { NavLink,  } from 'react-router-dom'
 import clsx from 'clsx'
 import { FaCaretDown, FaCaretRight } from "react-icons/fa";
 import { useSelector } from 'react-redux'
-import icons from 'ultils/icons'
-
-const { FaHome } = icons
 
 const activedStyle = 'px-4 py-2 flex items-center text-gray-900 gap-2 bg-gray-300'
 const noActivedStyle = 'px-4 py-2 flex items-center text-gray-900 gap-2 hover:bg-gray-300'

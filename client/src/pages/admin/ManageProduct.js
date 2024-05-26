@@ -162,15 +162,15 @@ const ManageProduct = () => {
                                 <div className='flex gap-1 items-center justify-center'>
                                     <span
                                         onClick={() => setEditProduct(el)}
-                                        className='text-orange-400 text-[20px]  hover:text-orange-700 hover:underline cursor-pointer px-1'>
+                                        className='text-orange-400 text-[20px]  hover:text-orange-700 cursor-pointer px-1'>
                                         <FaEdit /></span>
                                     <span
                                         onClick={() => handleDeleteProduct(el._id)}
-                                        className='text-orange-400 text-[20px]  hover:text-orange-700 hover:underline cursor-pointer px-1'>
+                                        className='text-orange-400 text-[20px]  hover:text-orange-700 cursor-pointer px-1'>
                                         <RiDeleteBin6Fill /></span>
                                     <span
                                         onClick={() => setCustomizeVarriant(el)}
-                                        className='text-orange-400 text-[20px]  hover:text-orange-700 hover:underline cursor-pointer px-1'>
+                                        className='text-orange-400 text-[20px]  hover:text-orange-700 cursor-pointer px-1'>
                                         <BiSolidCustomize /></span>
                                 </div>
                             </td>
