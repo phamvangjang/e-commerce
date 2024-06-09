@@ -45,7 +45,7 @@ function App() {
     dispatch(getCategories())
   }, [])
   return (
-    <div className="font-main h-screen relative">
+    <div className="font-main h-full relative">
       {isShowModel && <Model>{modelChildren}</Model>}
       {isShowCart &&
         <div
@@ -55,6 +55,7 @@ function App() {
         </div>}
       <Routes>
         <Route path={path.CHECKOUT} element={<Checkout />} />
+
         <Route path={path.PUBLIC} element={<Public />}>
           <Route path={path.HOME} element={<Home />} />
           <Route path={path.BLOGS} element={<Blogs />} />
@@ -65,7 +66,6 @@ function App() {
           <Route path={path.PRODUCTS_CATEGORY} element={<Products />} />
           <Route path={path.RESET_PASSWORD} element={<ResetPassword />} />
           <Route path={path.ALL} element={<Home />} />
-
         </Route>
 
         <Route path={path.ADMIN} element={<AdminLayout />}>

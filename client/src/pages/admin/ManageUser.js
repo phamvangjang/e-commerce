@@ -24,18 +24,17 @@ const ManageUser = () => {
         isBlocked: ''
     })
 
+    const [users, setUsers] = useState(null)
     const [queries, setQueries] = useState({
         q: ''
     })
-    const [params] = useSearchParams()
-    const [users, setUsers] = useState(null)
-    const [editElm, setEditElm] = useState(null)
     const [update, setUpdate] = useState(false)
+    const [editElm, setEditElm] = useState(null)
+    const [params] = useSearchParams()
 
     const fetchUsers = async (params) => {
         const response = await apiGetUsers({ ...params, limit: process.env.REACT_APP_LIMIT })
         if (response.success) setUsers(response)
-
     }
 
     const render = useCallback(() => {
@@ -83,6 +82,7 @@ const ManageUser = () => {
             status: editElm.isBlocked
         })
     }, [editElm])
+
 
     return (
         <div className={clsx('w-full', editElm && 'pl-16')}>
@@ -203,19 +203,20 @@ const ManageUser = () => {
                                             />
                                             : <span>{el.isBlocked ? 'Blocked' : 'Active'}</span>}</td>
                                     <td className='py-2 border border-gray-500'>{moment(el.createdAt).format('DD/MM/YYYY')}</td>
-                                    <td className='py-2 border border-gray-500'>
-                                        <div className='flex gap-1 items-center justify-center'>
-                                            {editElm?._id ?
-                                                <span
-                                                    onClick={() => setEditElm(null)}
-                                                    className='text-orange-400 text-[20px]  hover:text-orange-700 cursor-pointer'><FaBackspace/></span>
-                                                : <span
-                                                    onClick={() => setEditElm(el)}
-                                                    className='text-orange-400 text-[20px]  hover:text-orange-700 cursor-pointer'><FaEdit /></span>}
+                                    <td className='py-2  flex gap-1 items-center justify-center'>
+                                        {editElm?._id ?
                                             <span
-                                                onClick={() => handleDeleteUser(el._id)}
-                                                className='text-orange-400 text-[20px]  hover:text-orange-700 cursor-pointer'><RiDeleteBin6Fill /></span>
-                                        </div>
+                                                onClick={() => setEditElm(null)}
+                                                className='text-orange-400 text-[20px]  hover:text-orange-700 cursor-pointer'><FaBackspace />
+                                            </span>
+                                            : <span
+                                                onClick={() => setEditElm(el)}
+                                                className='text-orange-400 text-[20px]  hover:text-orange-700 cursor-pointer'><FaEdit />
+                                            </span>}
+
+                                        <span
+                                            onClick={() => handleDeleteUser(el._id)}
+                                            className='text-orange-400 text-[20px]  hover:text-orange-700 cursor-pointer'><RiDeleteBin6Fill /></span>
                                     </td>
                                 </tr>
                             ))}

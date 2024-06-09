@@ -59,8 +59,8 @@ const DetailProduct = ({ isQuickView, data, location, dispatch, navigate }) => {
         const response = await apiGetProduct(pid)
         // console.log(response)
         if (response.success) {
-            setProduct(response.productDada)
-            setCurrenImage(response.productDada?.thumb)
+            setProduct(response.productData)
+            setCurrenImage(response.productData?.thumb)
         }
     }
 
@@ -175,6 +175,7 @@ const DetailProduct = ({ isQuickView, data, location, dispatch, navigate }) => {
                     isQuickView
                         ? 'w-fit p-6 rounded-md'
                         : 'w-main')}>
+                
                 <div className="flex-4 flex flex-col">
                     <div className="w-[460px] h-[460px] border">
                         <ReactImageMagnify {...{

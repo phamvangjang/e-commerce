@@ -27,7 +27,7 @@ const Login = () => {
     const [isForgotPassword, setIsForgotPassword] = useState(false)
     const [isRegister, setIsRegister] = useState(false)
     const [searchParams] = useSearchParams()
-    console.log(searchParams.get('redirect'))
+    // console.log(searchParams.get('redirect'))
     const resetPayload = () => {
         setPayload({
             email: '',
@@ -41,7 +41,7 @@ const Login = () => {
     const [email, setEmail] = useState('')
     const handleForgotPassword = async () => {
         const response = await apiForgotPassword({ email })
-        console.log(response)
+        // console.log(response)
         if (response.success) {
             toast.success(response.mes, { theme: 'colored' })
         } else {
@@ -81,7 +81,7 @@ const Login = () => {
 
     const finalRegister = async () => {
         const response = await apiFinalregister(token)
-        console.log(response)
+        // console.log(response)
         if (response.success) {
             Swal.fire('Congratulation', response.mes, 'success').then(() => {
                 setIsRegister(false)
@@ -126,7 +126,6 @@ const Login = () => {
                             placeholder="Exp: email@gmail.com"
                             value={email}
                             onChange={e => setEmail(e.target.value)}
-
                         />
                         <div className="flex items-center justify-end w-full gap-4">
                             <Button

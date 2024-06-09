@@ -1,10 +1,10 @@
 import React, { memo } from 'react'
-import { HashLoader } from 'react-spinners'
+import { ClipLoader } from 'react-spinners'
 
 const Loading = () => {
     return (
         <div>
-            <HashLoader color='#ee3131'/>
+            <ClipLoader color='#34e3f5'/>
         </div>
     )
 }

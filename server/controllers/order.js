@@ -1,13 +1,18 @@
 const Order = require('../models/order')
 const User = require('../models/user')
+const Product = require('../models/product')
 const Coupon = require('../models/coupon')
 const asyncHandler = require('express-async-handler')
 
 const createOrder = asyncHandler(async (req, res) => {
     const { _id } = req.user;
     const { products, total, address, status } = req.body
+    // const pid = req.body.products._id
+    // console.log({ products, total, address, status })
+    // console.log(pid)
     if (address) {
         await User.findByIdAndUpdate(_id, { address, cart: [] })
+        // await Product.findByIdAndUpdate(pid, { sold: sold + 1, quantity: quantity - 1 })
     }
 
     const data = { products, total, orderBy: _id }
@@ -118,7 +123,6 @@ const getUserOrders = asyncHandler(async (req, res) => {
 
 const getOrders = asyncHandler(async (req, res) => {
     const queries = { ...req.query }
-    const { _id } = req.user
     //Tach cac truong dac biet ra khoi query
     const excludeFields = ['limit', 'sort', 'page', 'fields']
     excludeFields.forEach(el => delete queries[el])
@@ -126,36 +130,7 @@ const getOrders = asyncHandler(async (req, res) => {
     //format lai cac operator cho dung cu phap mongoose
     let queryString = JSON.stringify(queries)
     queryString = queryString.replace(/\b(gte|gt|lt|lte)\b/g, macthedEl => `$${macthedEl}`)
-    const formatedQueries = JSON.parse(queryString)
-    // let colorQueryObject = {}
-
-    // //Filtering 
-    // if (queries?.title) formatedQueries.title = { $regex: queries.title, $options: 'i' }
-    // if (queries?.category) formatedQueries.category = { $regex: queries.category, $options: 'i' }
-    // if (queries?.color) {
-    //     delete formatedQueries.color
-    //     const colorArr = queries.color?.split(',')
-    //     const colorQuery = colorArr.map(el => ({ color: { $regex: el, $options: 'i' } }))
-    //     colorQueryObject = { $or: colorQuery }
-    // }
-
-    // let queryObject = {}
-
-    // if (queries?.q) {
-    //     delete formatedQueries.q
-    //     queryObject = {
-    //         $or: [
-    //             { color: { $regex: queries.q, $options: 'i' } },
-    //             { title: { $regex: queries.q, $options: 'i' } },
-    //             { category: { $regex: queries.q, $options: 'i' } },
-    //             { brand: { $regex: queries.q, $options: 'i' } },
-    //             // { description: { $regex: queries.q, $options: 'i' } },
-    //         ]
-    //     }
-    // }
-
-    const qr = { ...formatedQueries, orderBy: _id }
-    let queryCommand = Order.find(qr)
+    let queryCommand = Order.find()
 
     //sorting
     if (req.query.sort) {
@@ -182,7 +157,7 @@ const getOrders = asyncHandler(async (req, res) => {
     //so luong san pham thoa man dieu kien !== so luong sp tra ve 1 lan goi API
     try {
         const response = await queryCommand.exec();
-        const counts = await Order.find(qr).countDocuments();
+        const counts = await Order.find().countDocuments();
         return res.status(200).json({
             success: response ? true : false,
             counts,

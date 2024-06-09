@@ -131,8 +131,7 @@ const CreateProduct = () => {
                             fullWidth
                             placeholder='Enter price of new Product...'
                             type='number'
-                            style='flex-auto'
-
+                            style='flex-auto'                                                   
                         />
 
                         <InputForm

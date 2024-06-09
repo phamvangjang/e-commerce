@@ -29,19 +29,15 @@ const DetailCart = ({ location, navigate }) => {
     }
     // console.log(currentCart)
     return (
-        <div className='w-full'>
-            <div className="h-[80px] flex justify-center items-center bg-gray-200">
-                <div className="w-main ">
-                    <h3 className='mx-2 font-bold uppercase text-2xl'>My Cart</h3>
-                    {/* <Breadcrumb
-                        category={location?.pathname?.replace('/', ' ')?.split('-')?.join(' ')} /> */}
-                </div>
-            </div>
+        <div className='w-full relative px-4'>
+            <header className="text-3xl font-semibold py-4 border-b border-gray-500">
+                My Cart
+            </header>
 
             <div
-                className='flex flex-col border mt-6 mb-6 w-main mx-auto'>
+                className='flex flex-col border mt-6 mb-6 w-full mx-auto'>
                 <div
-                    className='border-b w-main mx-auto font-bold py-3 grid grid-cols-10'>
+                    className='border-b w-full mx-auto font-bold py-3 grid grid-cols-10'>
                     <span
                         className='col-span-6 w-full text-center'>Product</span>
                     <span
@@ -61,7 +57,7 @@ const DetailCart = ({ location, navigate }) => {
                         pid={el?.product?._id} />
                 ))}
             </div>
-            <div className='mb-12 w-main mx-auto flex flex-col justify-center items-end gap-3'>
+            <div className='mb-12 w-full mx-auto flex flex-col justify-center items-end gap-3'>
                 <span className='flex items-center gap-8 text-sm'>
                     <span>Subtotal: </span>
                     <span className='text-main font-bold'>{`${formatMoney(currentCart?.reduce((sum, el) => +el?.price * el?.quantity + sum, 0))} VND`}</span>
@@ -73,9 +69,6 @@ const DetailCart = ({ location, navigate }) => {
                     target='_blank'
                     to={`/${path.CHECKOUT}`}>Checkout</Link> */}
                 </Button>
-            </div>
-            <div className='h-[500px]'>
-
             </div>
         </div>
 

@@ -104,7 +104,7 @@ const ManageProduct = () => {
 
             <div className='flex w-full justify-end items-center px-4'>
                 <form
-                    className='w-[45%]'
+                    className='w-[45%] '
                     onSubmit={handleSubmit(handleSearchProduct)}
                 >
                     <InputForm

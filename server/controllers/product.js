@@ -29,7 +29,7 @@ const getProduct = asyncHandler(async (req, res) => {
     })
     return res.status(200).json({
         success: product ? true : false,
-        productDada: product ? product : 'Cannot get Product'
+        productData: product ? product : 'Cannot get Product'
     })
 })
 

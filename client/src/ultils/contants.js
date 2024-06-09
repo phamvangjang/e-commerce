@@ -83,20 +83,20 @@ export const productInforTabs = [
 ]
 
 export const color = [
-    'Brown',
-    'Gray',
-    'Silver',
-    'Pink',
-    'Blue',
-    'Red',
-    'Black Leather',
+    'BLACK',
+    'SPACE GRAY',
+    'GRAY',
+    'WHITE',
+    'RED',
+    'BLACK LEATHER',
     'MINERAL BLACK',
-    'Gold',
-    'White',
-    'Black',
-    'Carbon gray',
-    'Quite black',
-    'Dazzling white',
+    'GOLD',
+    'WHITE',
+    'BLACK',
+    'CARBON GRAY',
+    'QUITE BLACK',
+    'DAZZLING WHITE',
+    'SILVER',
 ]
 
 export const sorts = [

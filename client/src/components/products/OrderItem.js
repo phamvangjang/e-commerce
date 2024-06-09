@@ -24,7 +24,7 @@ const OrderItem = ({ dispatch, color, defaultQuantity=1 , price, title, thumbnai
     }, [quantity])
     return (
         <div
-            className='w-main mx-auto font-bold py-10 grid grid-cols-10'>
+            className='w-full mx-auto font-bold py-10 grid grid-cols-10'>
             <span
                 className='col-span-6 w-full text-center'>
                 <div className='flex gap-2'>

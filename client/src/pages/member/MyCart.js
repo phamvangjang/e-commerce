@@ -3,9 +3,9 @@ import React, { memo } from 'react'
 
 const MyCart = (props) => {
     return (
-        <div 
-        className='cursor-pointer'
-        onClick={() => props.navigate('/')}>
+        <div
+            className='cursor-pointer'
+            onClick={() => props.navigate('/')}>
             MyCart
         </div>
     )

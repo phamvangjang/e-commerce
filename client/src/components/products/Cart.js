@@ -23,11 +23,11 @@ const Cart = ({ dispatch, navigate }) => {
         }
         else toast.error(response.mes)
     }
-    // console.log(current.cart)
+
     return (
         <div
             onClick={e => e.stopPropagation()}
-            className='w-[400px] h-screen bg-gray-900 text-gray-50 p-6 grid grid-rows-10'>
+            className='w-[400px] h-screen overflow-y-auto bg-gray-900 text-gray-50 p-6 grid grid-rows-10'>
             <header className='border-b border-gray-400 flex justify-between items-center font-bold text-2xl row-span-1 h-full'>
                 <span>Your cart</span>
                 <span
@@ -37,7 +37,7 @@ const Cart = ({ dispatch, navigate }) => {
                 </span>
             </header>
 
-            <section className='flex flex-col gap-3 row-span-7 h-full max-h-[full] overflow-y-auto py-3'>
+            <section className='flex flex-col gap-3 row-span-6 h-full max-h-[full] overflow-y-auto py-3'>
                 {!currentCart && <div className='text-sm italic'>Your cart is empty.</div>}
                 {currentCart && currentCart?.map(el => (
                     <div
@@ -72,7 +72,7 @@ const Cart = ({ dispatch, navigate }) => {
                 ))}
             </section>
 
-            <div className='row-span-2 h-full flex flex-col gap-4'>
+            <div className='row-span-3 h-full flex flex-col gap-4 justify-center'>
                 <div
                     className='flex items-center my-4 justify-between pt-4 border-t'>
                     <span>Subtotal: </span>
@@ -92,6 +92,8 @@ const Cart = ({ dispatch, navigate }) => {
                     >SHOPPING CART</Button>
                 </div>
             </div>
+
+            <div className='row-span-1'></div>
         </div>
     )
 }

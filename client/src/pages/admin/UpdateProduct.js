@@ -96,7 +96,7 @@ const UpdateProduct = ({ editProduct, render, setEditProduct }) => {
             dispath(showModel({ isShowModel: true, modelChildren: <Loading /> }))
             const response = await apiUpdateProduct(formData, editProduct._id)
             dispath(showModel({ isShowModel: false, modelChildren: null }))
-            console.log(response)
+            // console.log(response)
 
             if (response.success) {
                 toast.success(response.mes)

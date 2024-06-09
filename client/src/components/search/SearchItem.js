@@ -12,6 +12,7 @@ const SearchItem = ({ name, activeClick, changeActiveFilter, type = 'checkbox' }
     const { category } = useParams()
     const [selected, setSelected] = useState([])
     const [bestPrice, setBestPrice] = useState(null)
+    const [timeoutId, setTimeoutId] = useState(null);
 
     const [price, setPrice] = useState({
         from: '',
@@ -49,10 +50,28 @@ const SearchItem = ({ name, activeClick, changeActiveFilter, type = 'checkbox' }
     useEffect(() => {
         if (type === 'input') fetchBestPriceProduct()
     }, [type])
-    // console.log(bestPrice)
 
+    const validatePrices = () => {
+        if (price.from && price.to && price.from > price.to) {
+            alert('From price cannot be greater than To price!');
+        }
+    };
     useEffect(() => {
-        if (price.from && price.to && price.from > price.to) alert('From price cannot greater than to To price!!!')
+        // if (price.from && price.to && price.from > price.to) alert('From price cannot greater than to To price!!!')
+        // Clear any existing timeout before scheduling a new one
+        if (timeoutId) {
+            clearTimeout(timeoutId);
+        }
+
+        const newTimeoutId = setTimeout(() => {
+            validatePrices();
+        }, 500);
+
+        // Store the timeout ID for cleanup
+        setTimeoutId(newTimeoutId);
+
+        // Cleanup function to clear the timeout on unmount
+        return () => clearTimeout(timeoutId);
     }, [price])
 
     const debouncePriceFrom = useDebounce(price.from, 500)

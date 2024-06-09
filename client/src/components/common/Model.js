@@ -7,7 +7,7 @@ const Model = ({ children }) => {
     return (
         <div
             onClick={() => dispatch(showModel({ isShowModel: false, modelChildren: null }))}
-            className='absolute bg-overlay inset-0 z-50 flex items-center justify-center'>
+            className='absolute w-full h-full bg-overlay inset-0 z-[60] flex items-center justify-center'>
             {children}
         </div>
     )
