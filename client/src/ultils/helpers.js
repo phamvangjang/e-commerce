@@ -40,6 +40,12 @@ export const validate = (payload, setInvalidFields) => {
                     invalids++
                     setInvalidFields(prev => [...prev, { name: arr[0], mes: 'Email invalid.' }])
                 }
+                //chưa pull cái mới về nè
+                if (arr[1].length > 256) {
+                    invalids++
+                    setInvalidFields(prev => [...prev, { name: arr[0], mes: 'This email field length too long' }])
+                }
+                setInvalidFields(prev => [...prev, { name: arr[0], mes: '' }])
                 break;
 
             case 'password':
@@ -47,6 +53,11 @@ export const validate = (payload, setInvalidFields) => {
                     invalids++
                     setInvalidFields(prev => [...prev, { name: arr[0], mes: 'Password minximum 6 characters.' }])
                 }
+                if (arr[1].length > 29) {
+                    invalids++
+                    setInvalidFields(prev => [...prev, { name: arr[0], mes: 'Password maximum 29 characters.' }])
+                }
+                setInvalidFields(prev => [...prev, { name: arr[0], mes: '' }])
                 break;
         }
     }
@@ -60,7 +71,7 @@ export const generateRange = (start, end) => {
 }
 
 export function getBase64(file) {
-    if(!file) return ''
+    if (!file) return ''
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
