@@ -38,7 +38,11 @@ export const validate = (payload, setInvalidFields) => {
                 const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                 if (!arr[1].match(regex)) {
                     invalids++
-                    setInvalidFields(prev => [...prev, { name: arr[0], mes: 'Email invalid.' }])
+                    setInvalidFields(prev => [...prev, { name: arr[0], mes: 'This Email is invalid.' }])
+                }
+                if (arr[1].length > 256) {
+                    invalids++
+                    setInvalidFields(prev => [...prev, { name: arr[0], mes: 'This email field length too long' }])
                 }
                 break;
 
