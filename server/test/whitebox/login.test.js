@@ -112,7 +112,7 @@ describe('register', () => {
     });
 
     it('nên trả về lỗi nếu thiếu email hoặc mật khẩu', async () => {
-        req.body = { email: '', password: '' };
+        req.body = { email: '@123', password: '', firstname: '', lastname: '', mobile: '' };
         await register(req, res, next);
         expect(res.statusCode).toBe(400);
         expect(res._getJSONData()).toEqual({
