@@ -1,7 +1,7 @@
 import React, { memo, Fragment, useState } from 'react'
 import avatar from '../../assets/avatar-default.png'
 import { memberSidebar } from 'ultils/contants'
-import { NavLink,  } from 'react-router-dom'
+import { NavLink, } from 'react-router-dom'
 import clsx from 'clsx'
 import { FaCaretDown, FaCaretRight } from "react-icons/fa";
 import { useSelector } from 'react-redux'
@@ -24,7 +24,7 @@ const MemberSidebar = () => {
                 <img
                     src={current?.avatar || avatar}
                     alt='avatar'
-                    className='w-16 h-16 object-cover'
+                    className='rounded-full w-16 h-16 object-cover'
                 />
                 <small>{`${current.firstname} ${current.lastname}`}</small>
             </div>

@@ -124,7 +124,7 @@ const Personal = ({navigate}) => {
                         <img
                             src={current?.avatar || avatar}
                             alt='avatar'
-                            className='w-16 h-16 object-cover cursor-pointer'
+                            className='rounded-full w-16 h-16 object-cover cursor-pointer'
                         />
                     </label>
                     <input
